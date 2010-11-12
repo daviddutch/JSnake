@@ -2,7 +2,7 @@ package lang;
 
 import java.util.ListResourceBundle;
 
-public class Idat_fr_ch extends ListResourceBundle{
+public class Idat_fr extends ListResourceBundle{
 
   private Object[][] contents = { {"language", "Langue"},
                                   {"speed", "Vitesse"},
