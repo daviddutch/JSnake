@@ -13,7 +13,7 @@ public class GameView extends JFrame {
   OptionDialog od;
   
   public GameView(World world, WorldModel wm) {
-    setTitle("Snake !!");
+    setTitle("Snake 2 !!");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
     setSize(700, 700);

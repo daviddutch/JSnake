@@ -12,7 +12,7 @@ import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 public class StatsPanel extends JPanel {
   public StatsPanel(){
     ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
-    this.setLayout(layout);
+    setLayout(layout);
     layout.addRow("a.......ab.b");
     layout.addRow("c.......cd.d");
     layout.addRow("e.......ef.f");
@@ -23,7 +23,10 @@ public class StatsPanel extends JPanel {
     add(new JLabel("Vitesse :"), "e");
     add(new JLabel("10"), "f");
     
+    setSize(230, 200);
+    setPreferredSize(getSize());
     
-    setBackground(Color.BLACK);
+    setBackground(Color.GRAY);
+    
   }
 }
