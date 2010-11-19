@@ -5,8 +5,11 @@ import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 
+import world.WorldModel;
+
 public class OptionDialog extends JDialog {
-  public OptionDialog(){
+  
+  public OptionDialog(WorldModel wm){
     setTitle("Snake options !!");
     setSize(400, 200);
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

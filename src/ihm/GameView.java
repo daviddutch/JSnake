@@ -24,11 +24,11 @@ public class GameView extends JFrame {
     setLocation((screenSize.width - frameSize.width) / 2,
     (screenSize.height - frameSize.height) / 5);
     
-    od = new OptionDialog();
+    od = new OptionDialog(wm);
     od.setModal(true);
     
-    add(new GamePanel(), BorderLayout.WEST);
-    add(new StatsPanel(), BorderLayout.EAST);
+    add(new GamePanel(wm), BorderLayout.WEST);
+    add(new StatsPanel(wm), BorderLayout.EAST);
   }
   public void setVisible(boolean state){
     super.setVisible(state);

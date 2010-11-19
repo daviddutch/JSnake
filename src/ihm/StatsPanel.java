@@ -6,11 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import world.WorldModel;
+
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class StatsPanel extends JPanel {
-  public StatsPanel(){
+  public StatsPanel(WorldModel wm){
     ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
     setLayout(layout);
     layout.addRow("a.......ab.b");
