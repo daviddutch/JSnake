@@ -13,6 +13,7 @@ public class WorldModel extends Observable {
     STOP, PLAY, PAUSE, GAME_OVER;
   }
   private int    score=0;
+  private int	 cntEaten=0;
   private int    speed=4;
   private int    [][] gameGrid;
   private GameState   state;
@@ -58,6 +59,19 @@ public class WorldModel extends Observable {
    */
   public int getScore() {
     return score;
+  }
+  /**
+   * set the number of eaten insects
+   * @param cntEaten number of eaten insects
+   */
+  public void setCntEaten(int cntEaten) {
+	  this.cntEaten = cntEaten;	  
+  }
+  /**
+   * get the number of eaten insects
+   */
+  public int getCntEaten() {
+	  return cntEaten;	  
   }
   /**
    * @param locale the locale to set
