@@ -117,6 +117,13 @@ public class WorldModel extends Observable {
     return state;
   }
   /**
+   * sets the next direction to d
+   * @param d next direction
+   */
+  public void setNextDirection(Direction d) {
+	  nextDirection = d;
+  }
+  /**
    * @return the insect
    */
   public GridPoint getInsect(){
@@ -167,6 +174,7 @@ public class WorldModel extends Observable {
 	
 	snake.addFirst(next);
 	
+	// Insect has been eaten, snake grows longer
 	if(next.getX()==insect.getX() && next.getY()==insect.getY()) {
 		//TODO: replace insect somewhere else
 	}
