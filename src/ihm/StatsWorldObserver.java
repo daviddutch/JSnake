@@ -1,7 +1,41 @@
 package ihm;
 
-import world.IWorldObserver;
+import java.util.Observable;
+import java.util.Observer;
 
-public class StatsWorldObserver implements IWorldObserver {
+import world.WorldModel;
+
+
+public class StatsWorldObserver implements Observer {
+	StatsPanel sp;
+	
+	public StatsWorldObserver(StatsPanel sp, WorldModel wm) {
+		this.sp = sp;
+		configChanged(wm); 
+	}
+	
+	@Override
+	public void update(Observable o, Object event) {
+		WorldModel wm = (WorldModel) o;
+	    WorldModel.WorldEvents what = (WorldModel.WorldEvents) event;
+	    switch (what){
+	      case CONFIG_CHANGED:
+	        configChanged(wm);
+	        break;
+	      case STEP_FORWARD:
+	        stepForward(wm);
+	        break;
+	    }
+	  }
+	
+	  private void configChanged(WorldModel wm){
+		  sp.lbScore.setText(""+wm.getScore());
+		  sp.lbCntEaten.setText(""+wm.getCntEaten());
+		  sp.lbSpeed.setText(""+wm.getSpeed());
+	  }
+	  
+	  private void stepForward(WorldModel wm){
+	    
+	  }
 
 }
