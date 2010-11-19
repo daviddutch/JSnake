@@ -17,7 +17,7 @@ public class AnimSnake implements Runnable {
       wm.stepForward();
       animPanel.repaint();
       try {
-        Thread.sleep(2000);
+        Thread.sleep(200);
       }
       catch (InterruptedException e) {
         e.printStackTrace();
