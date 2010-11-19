@@ -162,7 +162,7 @@ public class WorldModel extends Observable {
 	
 	//TODO: if next position is not valid return error value
 	if(		next.getX()<0 || next.getX()>=gridWidth ||	//next point out of bounds
-			next.getY()<0 || next.getX()>=gridHeight) {
+			next.getY()<0 || next.getY()>=gridHeight) {
 		return; //TODO: return error
 	}
 	
