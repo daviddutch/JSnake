@@ -65,6 +65,8 @@ public class WorldModel extends Observable {
    * @param cntEaten number of eaten insects
    */
   public void setCntEaten(int cntEaten) {
+	  setChanged();
+	  notifyObservers(WorldEvents.CONFIG_CHANGED);
 	  this.cntEaten = cntEaten;	  
   }
   /**
@@ -77,9 +79,9 @@ public class WorldModel extends Observable {
    * @param locale the locale to set
    */
   public void setLocale(Locale locale) {
+	this.locale = locale;
     setChanged();
     notifyObservers(WorldEvents.CONFIG_CHANGED);
-    this.locale = locale;
   }
   /**
    * @return the locale
@@ -91,9 +93,9 @@ public class WorldModel extends Observable {
    * @param state the state to set
    */
   public void setState(GameState state) {
+	this.state = state;
     setChanged();
     notifyObservers(WorldEvents.CONFIG_CHANGED);
-    this.state = state;
   }
   /**
    * @return the state
@@ -107,6 +109,4 @@ public class WorldModel extends Observable {
   public int    [][] getGameGrid() {
     return gameGrid.clone(); //TODO : Deep clone
   }
-  
-  
 }
