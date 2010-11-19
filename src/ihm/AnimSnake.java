@@ -1,6 +1,7 @@
 package ihm;
 
 import world.WorldModel;
+import world.WorldModel.GameState;
 
 public class AnimSnake implements Runnable {
   private GamePanel animPanel;
@@ -13,11 +14,11 @@ public class AnimSnake implements Runnable {
   }
   //----------------------------------------------------------------------------
   public void run() {
-    while (animPanel.runSnake) {
+    while (true){//wm.getState()==GameState.PLAY) {
       wm.stepForward();
       animPanel.repaint();
       try {
-        Thread.sleep(200);
+        Thread.sleep(100);
       }
       catch (InterruptedException e) {
         e.printStackTrace();

@@ -13,6 +13,7 @@ import javax.swing.KeyStroke;
 import world.World;
 import world.WorldModel;
 import world.WorldModel.Direction;
+import world.WorldModel.GameState;
 
 public class GameView extends JFrame {
   OptionDialog od;
@@ -49,7 +50,7 @@ public class GameView extends JFrame {
     od = new OptionDialog(wm);
     od.setModal(true);
     
-
+    wm.setState(GameState.PLAY);
     add(gp, BorderLayout.WEST);
     add(new StatsPanel(wm), BorderLayout.EAST);
   }

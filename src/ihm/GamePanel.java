@@ -18,12 +18,14 @@ public class GamePanel extends JPanel {
   GeneralPath path = new GeneralPath();
   int width        = 400;
   int height       = 400;
+  WorldModel wm;
   
   public GamePanel(WorldModel wm) {
     setSize(400, 400);
     setPreferredSize(getSize());
     
     setBackground(Color.GRAY);
+    this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
     Thread animThread = new Thread(new AnimSnake(this, wm));
     animThread.start();
@@ -57,6 +59,11 @@ public class GamePanel extends JPanel {
     g2.setPaint(Color.BLUE);
     g2.setStroke(new BasicStroke(3));
     g2.draw(path);
+    
+    GridPoint insect = wm.getInsect();
+    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), insect.getX()+3, insect.getY()+3);
+    g2.setPaint(Color.RED);
+    g2.fill(ins);
     
   }
 }
