@@ -7,12 +7,17 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
+import java.util.*;
+
 import world.WorldModel;
+import world.GridPoint;
 
 public class GamePanel extends JPanel {
 
   boolean runSnake = true;
-  int offset = 50;
+  GeneralPath path = new GeneralPath();
+  int width        = 400;
+  int height       = 400;
   
   public GamePanel(WorldModel wm) {
     setSize(400, 400);
@@ -23,8 +28,18 @@ public class GamePanel extends JPanel {
     Thread animThread = new Thread(new AnimSnake(this, wm));
     animThread.start();
   }
-  public void updateOffset(int incr){
-    offset+=incr;
+  private GridPoint convert(GridPoint p){
+    return new GridPoint(height/100*p.getX(), width/100*p.getY());
+  }
+  public void updatePath(Queue<GridPoint> gpq){
+    path = new GeneralPath();
+    Iterator<GridPoint> itr = gpq.iterator();
+    GridPoint point = convert((GridPoint)itr.next());
+    path.moveTo(point.getX(), point.getY());
+    while(itr.hasNext()) {
+      point = convert((GridPoint)itr.next());
+      path.lineTo(point.getX(), point.getY());
+    }
   }
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -32,20 +47,12 @@ public class GamePanel extends JPanel {
     
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
         RenderingHints.VALUE_ANTIALIAS_ON);
-    g2.translate(50, getHeight() - 50); // Move the origin to the lower left
-    g2.scale(1.0, -1.0); // Flip the sign of the coordinate system
+    //g2.translate(50, getHeight() - 50); // Move the origin to the lower left
+    //g2.scale(1.0, -1.0); // Flip the sign of the coordinate system
 
     Rectangle2D box = new Rectangle2D.Double(0, 0, 400, 400);
     g2.setPaint(Color.WHITE);
     g2.fill(box);
-    
-    GeneralPath path = new GeneralPath();
-    
-    path.moveTo(offset, offset); // Point de départ
-    path.lineTo(offset+20, offset);
-    path.lineTo(offset+20, offset+50);
-    path.lineTo(offset+70, offset+50);
-    path.lineTo(offset+70, offset+100);
 
     g2.setPaint(Color.BLUE);
     g2.setStroke(new BasicStroke(3));
