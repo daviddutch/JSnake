@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Queue;
+import java.util.Random;
 
 
 
@@ -161,14 +162,16 @@ public class WorldModel extends Observable {
 	}
 	
 	//TODO: if next position is not valid return error value
-	if(		next.getX()<0 || next.getX()>=gridWidth ||	//next point out of bounds
+	if(		next.getX()<0 || next.getX()>=gridWidth ||	// snake's head out of bounds
 			next.getY()<0 || next.getY()>=gridHeight) {
-		return; //TODO: return error
+		state = GameState.GAME_OVER;
+		return;
 	}
 	
 	for(GridPoint p : snake) {	// snake eat its own tail
 		if(next.getX()==p.getX() && next.getY()==p.getY()) {
-			return; //TODO: return error
+			state = GameState.GAME_OVER;
+			return;
 		}
 	}
 	
@@ -176,6 +179,7 @@ public class WorldModel extends Observable {
 	
 	// Insect has been eaten, snake grows longer
 	if(next.getX()==insect.getX() && next.getY()==insect.getY()) {
+		insect = new GridPoint((new Random()).nextInt(gridWidth), (new Random()).nextInt(gridHeight));
 		//TODO: replace insect somewhere else
 	}
 	else {
