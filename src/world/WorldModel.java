@@ -93,6 +93,10 @@ public class WorldModel extends Observable {
   public int    [][] getGameGrid() {
     return gameGrid.clone(); //TODO : Deep clone
   }
+  public void stepForward() {
+    setChanged();
+    notifyObservers(WorldEvents.STEP_FORWARD);
+  }
   
   
 }
