@@ -31,7 +31,7 @@ public class GamePanel extends JPanel {
     animThread.start();
   }
   private GridPoint convert(GridPoint p){
-    return new GridPoint(height/100*p.getX(), width/100*p.getY());
+    return new GridPoint(height/WorldModel.GRID_WIDTH*p.getX(), width/WorldModel.GRID_HEIGHT*p.getY());
   }
   public void updatePath(Queue<GridPoint> gpq){
     path = new GeneralPath();
@@ -52,16 +52,16 @@ public class GamePanel extends JPanel {
     //g2.translate(50, getHeight() - 50); // Move the origin to the lower left
     //g2.scale(1.0, -1.0); // Flip the sign of the coordinate system
 
-    Rectangle2D box = new Rectangle2D.Double(0, 0, 400, 400);
+    Rectangle2D box = new Rectangle2D.Double(0, 0, width, height);
     g2.setPaint(Color.WHITE);
     g2.fill(box);
 
     g2.setPaint(Color.BLUE);
-    g2.setStroke(new BasicStroke(3));
+    g2.setStroke(new BasicStroke(width/WorldModel.GRID_WIDTH));
     g2.draw(path);
     
     GridPoint insect = wm.getInsect();
-    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), insect.getX()+3, insect.getY()+3);
+    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), width/WorldModel.GRID_WIDTH, height/WorldModel.GRID_HEIGHT);
     g2.setPaint(Color.RED);
     g2.fill(ins);
     
