@@ -18,17 +18,18 @@ public class WorldModel extends Observable {
   public enum Direction {
 	UP, DOWN, LEFT, RIGHT;
   }
-  private int    score=0;
-  private int	 cntEaten=0;
-  private int    speed=4;
-  private int gridWidth=100;
-  private int gridHeight=100;
+  private int  	score=0;
+  private int	cntEaten=0;
+  private int 	speed=10;
+  private int 	gridWidth=100;
+  private int	gridHeight=100;
   private int    [][] gameGrid;
   private GameState   state;
   private Locale locale;
   private LinkedList<GridPoint> snake=new LinkedList<GridPoint>();
   private Direction nextDirection = Direction.LEFT;
   private GridPoint insect = new GridPoint(0, 0);
+  private Random r = new Random();
   
   public WorldModel(){
     setLocale(Locale.getDefault());
@@ -75,7 +76,7 @@ public class WorldModel extends Observable {
     return score;
   }
   /**
-   * set the number of eaten insects
+   * sets the number of eaten insects
    * @param cntEaten number of eaten insects
    */
   public void setCntEaten(int cntEaten) {
@@ -84,7 +85,7 @@ public class WorldModel extends Observable {
 	  this.cntEaten = cntEaten;	  
   }
   /**
-   * get the number of eaten insects
+   * gets the number of eaten insects
    */
   public int getCntEaten() {
 	  return cntEaten;	  
@@ -122,6 +123,14 @@ public class WorldModel extends Observable {
    * @param d next direction
    */
   public void setNextDirection(Direction d) {
+	  // check if next direction is opposite to the current one
+	  if ((nextDirection==Direction.DOWN && d==Direction.UP) ||
+			  (nextDirection==Direction.UP && d==Direction.DOWN))
+		  return;
+	  if ((nextDirection==Direction.LEFT && d==Direction.RIGHT) ||
+			  (nextDirection==Direction.RIGHT && d==Direction.LEFT))
+		  return;
+	  // change next direction
 	  nextDirection = d;
   }
   /**
@@ -136,9 +145,31 @@ public class WorldModel extends Observable {
   public Queue<GridPoint> getSnake(){
 	  return snake;
   }
-  
   /**
-   * Move snake to its next position.
+   * creates a new insect in a random place.
+   */
+  private void replaceInsect(){
+	  GridPoint ni; // the new insect
+	  do {
+		  ni=new GridPoint(r.nextInt(gridWidth), r.nextInt(gridHeight));
+	  }while(isSnakeOnPoint(ni));
+	  insect = ni;
+  }
+  /**
+   * checks if the snake is placed on the given point
+   * @param p point to check
+   * @return true if snake is on p
+   */
+  private boolean isSnakeOnPoint(GridPoint p) {
+	  for(GridPoint sp : snake) {
+		if(sp.getX()==p.getX() && sp.getY()==p.getY()) {
+			return true;
+		}
+	  }
+	  return false;
+  }
+  /**
+   * move snake to its next position.
    */
   public void stepForward() {
 	GridPoint crt = snake.getFirst();
@@ -161,18 +192,15 @@ public class WorldModel extends Observable {
 			next = new GridPoint(crt.getX(), crt.getY());
 	}
 	
-	//TODO: if next position is not valid return error value
-	if(		next.getX()<0 || next.getX()>=gridWidth ||	// snake's head out of bounds
+	if(		next.getX()<0 || next.getX()>=gridWidth ||	// check if snake goes out of bounds
 			next.getY()<0 || next.getY()>=gridHeight) {
-		state = GameState.GAME_OVER;
+		setState(GameState.GAME_OVER);
 		return;
 	}
 	
-	for(GridPoint p : snake) {	// snake eat its own tail
-		if(next.getX()==p.getX() && next.getY()==p.getY()) {
-			state = GameState.GAME_OVER;
-			return;
-		}
+	if(isSnakeOnPoint(next)) {	// snake eats its own tail
+		setState(GameState.GAME_OVER);
+		return;
 	}
 	
 	snake.addFirst(next);
@@ -180,7 +208,7 @@ public class WorldModel extends Observable {
 	// Insect has been eaten, snake grows longer
 	if(next.getX()==insect.getX() && next.getY()==insect.getY()) {
 		insect = new GridPoint((new Random()).nextInt(gridWidth), (new Random()).nextInt(gridHeight));
-		//TODO: replace insect somewhere else
+		replaceInsect();
 	}
 	else {
 		snake.removeLast();
