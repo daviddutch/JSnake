@@ -28,7 +28,6 @@ public class WorldModel extends Observable {
   public static final int GRID_WIDTH=100;
   public static final int GRID_HEIGHT=100;
 
-  private int    [][] gameGrid;
   private GameState   state;
   private Locale locale;
   private LinkedList<GridPoint> snake=new LinkedList<GridPoint>();
