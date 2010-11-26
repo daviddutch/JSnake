@@ -61,7 +61,7 @@ public class GamePanel extends JPanel {
     g2.draw(path);
     
     GridPoint insect = wm.getInsect();
-    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), insect.getX()+3, insect.getY()+3);
+    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), 3, 3);
     g2.setPaint(Color.RED);
     g2.fill(ins);
     
