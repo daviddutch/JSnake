@@ -12,6 +12,10 @@ import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class StatsPanel extends JPanel {
+	JLabel lbScore = new JLabel();
+	JLabel lbCntEaten = new JLabel();
+	JLabel lbSpeed = new JLabel();
+	
   public StatsPanel(WorldModel wm){
     ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
     setLayout(layout);
@@ -19,16 +23,17 @@ public class StatsPanel extends JPanel {
     layout.addRow("c.......cd.d");
     layout.addRow("e.......ef.f");
     add(new JLabel("Score :"), "a");
-    add(new JLabel("30"), "b");
+    add(lbScore, "b");
     add(new JLabel("Nb manger :"), "c");
-    add(new JLabel("3"), "d");
+    add(lbCntEaten, "d");
     add(new JLabel("Vitesse :"), "e");
-    add(new JLabel("10"), "f");
+    add(lbSpeed, "f");
+    
+    StatsWorldObserver wo = new StatsWorldObserver(this, wm);
+    wm.addObserver(wo);
     
     setSize(230, 200);
     setPreferredSize(getSize());
-    
     setBackground(Color.GRAY);
-    
   }
 }
