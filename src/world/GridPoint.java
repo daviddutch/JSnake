@@ -24,4 +24,12 @@ public class GridPoint {
 	public int getY() {
 		return y;
 	}
+	/**
+	 * check if this point has the same coordinate of p
+	 * @param p
+	 * @return true if the points are equal
+	 */
+	public boolean equals(GridPoint p) {
+		return x==p.getX() && y==p.getY();
+	}
 }
