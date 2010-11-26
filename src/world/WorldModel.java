@@ -206,8 +206,7 @@ public class WorldModel extends Observable {
 	snake.addFirst(next);
 	
 	// Insect has been eaten, snake grows longer
-	if(next.getX()==insect.getX() && next.getY()==insect.getY()) {
-		insect = new GridPoint((new Random()).nextInt(GRID_WIDTH), (new Random()).nextInt(GRID_HEIGHT));
+	if(next.equals(insect)) {
 		replaceInsect();
 	}
 	else {
