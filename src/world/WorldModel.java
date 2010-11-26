@@ -21,8 +21,8 @@ public class WorldModel extends Observable {
   private int    score=0;
   private int	 cntEaten=0;
   private int    speed=4;
-  private int gridWidth=100;
-  private int gridHeight=100;
+  public static final int GRID_WIDTH=100;
+  public static final int GRID_HEIGHT=100;
   private int    [][] gameGrid;
   private GameState   state;
   private Locale locale;
@@ -33,19 +33,13 @@ public class WorldModel extends Observable {
   public WorldModel(){
     setLocale(Locale.getDefault());
     state = GameState.STOP;
-    snake.addFirst(new GridPoint(gridWidth/2, gridHeight/2));
-    snake.addFirst(new GridPoint(gridWidth/2-1, gridHeight/2));
-    snake.addFirst(new GridPoint(gridWidth/2-2, gridHeight/2));
-    snake.addFirst(new GridPoint(gridWidth/2-2, gridHeight/2-1));
-    snake.addFirst(new GridPoint(gridWidth/2-2, gridHeight/2-2));
+    snake.addFirst(new GridPoint(GRID_WIDTH/2, GRID_HEIGHT/2));
+    snake.addFirst(new GridPoint(GRID_WIDTH/2-1, GRID_HEIGHT/2));
+    snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2));
+    snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-1));
+    snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-2));
   }
-  /**
-   * @param width grid width
-   * @param height grid height
-   */
-  public void setGridDimensions(int width, int height) {
-    gridWidth=width; gridHeight=height;
-  }
+  
   /**
    * @param speed the speed to set
    */
@@ -93,7 +87,7 @@ public class WorldModel extends Observable {
    * @param locale the locale to set
    */
   public void setLocale(Locale locale) {
-	this.locale = locale;
+    this.locale = locale;
     setChanged();
     notifyObservers(WorldEvents.CONFIG_CHANGED);
   }
@@ -162,8 +156,8 @@ public class WorldModel extends Observable {
 	}
 	
 	//TODO: if next position is not valid return error value
-	if(		next.getX()<0 || next.getX()>=gridWidth ||	// snake's head out of bounds
-			next.getY()<0 || next.getY()>=gridHeight) {
+	if(		next.getX()<0 || next.getX()>=GRID_WIDTH ||	// snake's head out of bounds
+			next.getY()<0 || next.getY()>=GRID_HEIGHT) {
 		state = GameState.GAME_OVER;
 		return;
 	}
@@ -179,7 +173,7 @@ public class WorldModel extends Observable {
 	
 	// Insect has been eaten, snake grows longer
 	if(next.getX()==insect.getX() && next.getY()==insect.getY()) {
-		insect = new GridPoint((new Random()).nextInt(gridWidth), (new Random()).nextInt(gridHeight));
+		insect = new GridPoint((new Random()).nextInt(GRID_WIDTH), (new Random()).nextInt(GRID_HEIGHT));
 		//TODO: replace insect somewhere else
 	}
 	else {
