@@ -132,6 +132,12 @@ public class WorldModel extends Observable {
 	  nextDirection = d;
   }
   /**
+   * Returns the next directions
+   */
+  public Direction getNextDirection() {
+	  return nextDirection;
+  }
+  /**
    * @return the insect
    */
   public GridPoint getInsect(){
