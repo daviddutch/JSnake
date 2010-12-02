@@ -44,7 +44,6 @@ public class WorldModel extends Observable {
     snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-1));
     snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-2));
   }
-  
   /**
    * @param speed the speed to set
    */
@@ -160,7 +159,7 @@ public class WorldModel extends Observable {
   /**
    * creates a new insect in a random place.
    */
-  private void replaceInsect(){
+  public void replaceInsect(){
 	  GridPoint ni; // the new insect
 	  do {
 		  ni=new GridPoint(r.nextInt(gridWidth), r.nextInt(gridHeight));
