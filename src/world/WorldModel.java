@@ -138,6 +138,14 @@ public class WorldModel extends Observable {
 	  return insect;
   }
   /**
+   * @param snake list representing the snake's points
+   */
+  public void setSnake(LinkedList<GridPoint> snake) {
+	  this.snake = snake;
+	  setChanged();
+	  notifyObservers(WorldEvents.STEP_FORWARD);
+  }
+  /**
    * @return the Queue representing the snake
    */
   public Queue<GridPoint> getSnake(){
