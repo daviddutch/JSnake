@@ -148,7 +148,7 @@ public class WorldModel extends Observable {
   /**
    * @return the Queue representing the snake
    */
-  public Queue<GridPoint> getSnake(){
+  public LinkedList<GridPoint> getSnake(){
 	  return snake;
   }
   /**
