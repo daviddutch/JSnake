@@ -23,9 +23,9 @@ public class GamePanel extends JPanel {
   WorldModel wm;
   
   public GamePanel(WorldModel wm) {
-    //setSize(400, 400);
-    //setPreferredSize(getSize());
-    System.out.println();
+    
+    setPreferredSize(new Dimension(400, 400));
+    
     setBackground(Color.BLACK);
     this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
