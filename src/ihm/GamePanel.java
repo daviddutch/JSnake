@@ -2,7 +2,6 @@ package ihm;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
@@ -11,6 +10,7 @@ import java.util.*;
 
 
 
+import world.SnakeController;
 import world.WorldModel;
 import world.GridPoint;
 
