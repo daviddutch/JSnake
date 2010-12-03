@@ -24,7 +24,7 @@ public class GamePanel extends JPanel {
   
   public GamePanel(WorldModel wm) {
     
-    setPreferredSize(new Dimension(400, 400));
+    //setPreferredSize(new Dimension(400, 400));
     
     setBackground(Color.BLACK);
     this.wm = wm;
@@ -34,6 +34,18 @@ public class GamePanel extends JPanel {
   }
   private GridPoint convert(GridPoint p){
     return new GridPoint(height/WorldModel.GRID_WIDTH*p.getX(), width/WorldModel.GRID_HEIGHT*p.getY());
+  }
+  public void updateSize(){
+    Dimension d = getSize();
+    if (d.width<d.height){
+      setPreferredSize(new Dimension(d.width, d.width));
+      width  = d.width;
+      height = d.width;
+    }else{
+      setPreferredSize(new Dimension(d.height, d.height));
+      width  = d.height;
+      height = d.height;
+    }
   }
   public void updatePath(Queue<GridPoint> gpq){
     path = new GeneralPath();
