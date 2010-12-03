@@ -22,7 +22,6 @@ public class SnakeController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		moveSnakeForward();
-		animPanel.repaint();
 	}
 	/**
 	 * Computes the snake's next state and update the world model.
@@ -69,6 +68,8 @@ public class SnakeController implements ActionListener {
 		else {
 			snake.removeLast();
 		}
+		
+		wm.setSnake(snake);
 	}
 	/**
 	 * checks if the snake is placed on the given point
