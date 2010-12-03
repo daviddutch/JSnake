@@ -3,12 +3,14 @@ package ihm;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.KeyStroke;
+
+import com.atticlabs.zonelayout.swing.ZoneLayout;
+import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 import world.World;
 import world.WorldModel;
@@ -19,7 +21,8 @@ public class GameView extends JFrame {
   OptionDialog od;
   
   public GameView(World world, WorldModel wm) {
-    setTitle("Snake 2 !!");
+    addComponentListener(new GamePanelResize(this));
+    setTitle("JSnake ! The Game !");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
     setSize(700, 700);
@@ -46,13 +49,15 @@ public class GameView extends JFrame {
     gp.getActionMap().put(gp.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)), new ArrowsAction(wm, Direction.RIGHT));
 
     
-    
     od = new OptionDialog(wm);
     od.setModal(true);
     
     wm.setState(GameState.PLAY);
-    add(gp, BorderLayout.WEST);
-    add(new StatsPanel(wm), BorderLayout.EAST);
+    ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
+    setLayout(layout);
+    layout.addRow("a~.......ab.b");
+    add(gp, "a");
+    add(new StatsPanel(wm), "b");
   }
   public void setVisible(boolean state){
     super.setVisible(state);
