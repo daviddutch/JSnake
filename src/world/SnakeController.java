@@ -5,12 +5,14 @@ import ihm.GamePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.Random;
 
 import world.WorldModel.GameState;
 
 public class SnakeController implements ActionListener {
 	private GamePanel animPanel;
 	private WorldModel wm;
+	private Random r = new Random();
 	
 	public SnakeController(GamePanel animPanel, WorldModel wm) {
 		this.animPanel = animPanel;
@@ -62,7 +64,7 @@ public class SnakeController implements ActionListener {
 		
 		// Insect has been eaten, snake grows longer
 		if(next.equals(wm.getInsect())) {
-			wm.replaceInsect();
+			replaceInsect(snake);
 		}
 		else {
 			snake.removeLast();
@@ -81,6 +83,16 @@ public class SnakeController implements ActionListener {
 			}
 	  }
 	  return false;
+	}
+	/**
+	 * creates a new insect in a random place.
+	 */
+	public void replaceInsect(LinkedList<GridPoint> snake){
+		GridPoint ni; // the new insect
+		do {
+			ni=new GridPoint(r.nextInt(wm.GRID_WIDTH), r.nextInt(wm.GRID_WIDTH));
+		}while(isSnakeOnPoint(ni, snake));
+		wm.setInsect(ni);
 	}
 }
 
