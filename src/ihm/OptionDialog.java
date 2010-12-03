@@ -1,6 +1,8 @@
 package ihm;
 
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Locale;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -28,26 +30,47 @@ public class OptionDialog extends JDialog {
   JComboBox boxLang = new JComboBox();
   JComboBox boxColor = new JComboBox();
   
+  LanguagesComboModel comboModel;
+  
+  JSlider sliderSpeed;
   
   public OptionDialog(WorldModel wm){
+    OptionDialogAction action = new OptionDialogAction(this);
     this.wm = wm;
     this.wm.addObserver((Observer) new OptionDialogObserver(this));
+    
+    comboModel= new LanguagesComboModel(wm);
        
     panel.add(Box.createVerticalGlue());
     panel.setMaximumSize(panel.getPreferredSize());
     
     imgSnake = new ImageIcon("images/logoSnake.png");
-        
+   
+    boxLang.setModel(comboModel);
     boxLang.setPreferredSize(new Dimension(100,20));
     boxLang.setMaximumSize(boxLang.getPreferredSize());
-    boxLang.addActionListener(new changeLanguage(this));
-    
+    boxLang.addActionListener(action);
+    boxLang.setActionCommand("lang");
+       
     boxColor.setPreferredSize(new Dimension(100,20));
     boxColor.setMaximumSize(boxColor.getPreferredSize());
-    //boxColor.addActionListener(new changeColor(this));
+    boxColor.addActionListener(action);
+    boxColor.setActionCommand("color");
 
-    setText();
-    
+    sliderSpeed = new JSlider();
+    sliderSpeed.setPreferredSize(new Dimension(200, 60));
+    sliderSpeed.setMinimumSize(new Dimension(150, 60));
+    sliderSpeed.setMaximumSize(new Dimension(200, 60));
+    sliderSpeed.setMinimum(1);
+    sliderSpeed.setMaximum(10);
+    sliderSpeed.setValue(wm.getSpeed());
+    sliderSpeed.setMajorTickSpacing(2);
+    sliderSpeed.setMinorTickSpacing(1);
+    sliderSpeed.setPaintTicks(true);
+    sliderSpeed.setPaintLabels(true);
+    sliderSpeed.setSnapToTicks(true);
+    sliderSpeed.addChangeListener(action);
+
     setTitle("Snake Game - Settings");
     setSize(800, 600);
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -60,9 +83,11 @@ public class OptionDialog extends JDialog {
     panel.add(lblLang);
     panel.add(boxLang);
     panel.add(lblSpeed);
+    panel.add(sliderSpeed);
     panel.add(lblColor);
+    panel.add(boxColor);
     panel.add(btGame);
-
+    
     getContentPane().add(panel);
     
   }
@@ -74,16 +99,17 @@ public class OptionDialog extends JDialog {
     lblSpeed.setText(bIdat.getString("speed")+" : ");
     lblColor.setText(bIdat.getString("color")+" : ");
     
-    boxLang.removeAllItems();
-    boxLang.removeAll();
-    boxLang.addItem(bIdat.getString("french"));
-    boxLang.addItem(bIdat.getString("english"));
-    boxLang.addItem(bIdat.getString("italian"));
+    comboModel.update();
+    boxLang.revalidate();
     
+    boxColor.removeAllItems();
+    boxColor.addItem(bIdat.getString("blue"));
+    boxColor.addItem(bIdat.getString("red"));
+    boxColor.addItem(bIdat.getString("pink"));    
+    boxColor.revalidate();
   }
 
   public void changeLang(int i) {
-    System.out.println("idLang:"+i);
     switch(i){
       case 0 :
         wm.setLocale(new Locale((Locale.FRENCH.toString())));
@@ -97,6 +123,9 @@ public class OptionDialog extends JDialog {
       default:
         break;
     }
-    //setText();
+  }
+
+  public void changeSpeed(int value) {
+    wm.setSpeed(value);    
   }
 }
