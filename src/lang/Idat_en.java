@@ -9,6 +9,9 @@ public class Idat_en extends ListResourceBundle{
                                   {"english", "English"},
                                   {"italian", "Italian"},
                                   {"color", "Color"},
+                                  {"blue", "Blue"},
+                                  {"red", "Red"},
+                                  {"pink", "Pink"},
                                   {"speed", "Speed"},
                                   {"play", "Play"},
                                   {"Pause", "Pause"}                              
