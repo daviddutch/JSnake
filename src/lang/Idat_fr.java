@@ -5,7 +5,6 @@ import java.util.ListResourceBundle;
 public class Idat_fr extends ListResourceBundle{
 
   private Object[][] contents = { {"language", "Langue"},
-                                  {"speed", "Vitesse"},
                                   {"french", "Français"},
                                   {"english", "Anglais"},
                                   {"italian", "Italien"},
@@ -14,7 +13,11 @@ public class Idat_fr extends ListResourceBundle{
                                   {"red", "Rouge"},
                                   {"pink", "Rose"},
                                   {"play", "Jouer"},
-                                  {"Pause", "Pause"}                              
+                                  {"Pause", "Pause"},
+                                  
+                                  {"score", "Points"},
+                                  {"cntEaten", "Insects mangés"},
+                                  {"speed", "Vitesse"}, 
   };
   
   protected Object[][] getContents() {
