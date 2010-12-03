@@ -2,13 +2,15 @@ package ihm;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
 import java.util.*;
 
+
+
+import world.SnakeController;
 import world.WorldModel;
 import world.GridPoint;
 
@@ -21,14 +23,14 @@ public class GamePanel extends JPanel {
   WorldModel wm;
   
   public GamePanel(WorldModel wm) {
-    setSize(400, 400);
-    setPreferredSize(getSize());
-    
-    setBackground(Color.GRAY);
+    //setSize(400, 400);
+    //setPreferredSize(getSize());
+    System.out.println();
+    setBackground(Color.BLACK);
     this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
-    Thread animThread = new Thread(new AnimSnake(this, wm));
-    animThread.start();
+    javax.swing.Timer timer = new javax.swing.Timer(200, new SnakeController(this, wm));
+    timer.start();
   }
   private GridPoint convert(GridPoint p){
     return new GridPoint(height/WorldModel.GRID_WIDTH*p.getX(), width/WorldModel.GRID_HEIGHT*p.getY());
@@ -60,7 +62,7 @@ public class GamePanel extends JPanel {
     g2.setStroke(new BasicStroke(width/WorldModel.GRID_WIDTH));
     g2.draw(path);
     
-    GridPoint insect = wm.getInsect();
+    GridPoint insect = convert(wm.getInsect());
     Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), width/WorldModel.GRID_WIDTH, height/WorldModel.GRID_HEIGHT);
     g2.setPaint(Color.RED);
     g2.fill(ins);

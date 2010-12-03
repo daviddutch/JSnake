@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import world.WorldModel;
 
@@ -12,6 +11,10 @@ import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class StatsPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JLabel lbScore = new JLabel();
 	JLabel lbCntEaten = new JLabel();
 	JLabel lbSpeed = new JLabel();
