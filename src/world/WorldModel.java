@@ -27,6 +27,9 @@ public class WorldModel extends Observable {
 
   public static final int GRID_WIDTH=100;
   public static final int GRID_HEIGHT=100;
+  
+  public final int SPEED_MIN=1;
+  public final int SPEED_MAX=20;
 
   private GameState   state;
   private Locale locale;
@@ -137,6 +140,12 @@ public class WorldModel extends Observable {
 	  return nextDirection;
   }
   /**
+   * sets the insect
+   */
+  public void setInsect(GridPoint insect) {
+	  this.insect = insect;
+  }
+  /**
    * @return the insect
    */
   public GridPoint getInsect(){
@@ -155,77 +164,5 @@ public class WorldModel extends Observable {
    */
   public LinkedList<GridPoint> getSnake(){
 	  return snake;
-  }
-  /**
-   * creates a new insect in a random place.
-   */
-  public void replaceInsect(){
-	  GridPoint ni; // the new insect
-	  do {
-		  ni=new GridPoint(r.nextInt(gridWidth), r.nextInt(gridHeight));
-	  }while(isSnakeOnPoint(ni));
-	  insect = ni;
-  }
-  /**
-   * checks if the snake is placed on the given point
-   * @param p point to check
-   * @return true if snake is on p
-   */
-  private boolean isSnakeOnPoint(GridPoint p) {
-	  for(GridPoint sp : snake) {
-		if(sp.getX()==p.getX() && sp.getY()==p.getY()) {
-			return true;
-		}
-	  }
-	  return false;
-  }
-  /**
-   * move snake to its next position.
-   */
-  public void stepForward() {
-	GridPoint crt = snake.getFirst();
-	GridPoint next;
-	
-	switch(nextDirection) {
-		case UP:
-			next = new GridPoint(crt.getX(), crt.getY()-1);
-			break;
-		case DOWN:
-			next = new GridPoint(crt.getX(), crt.getY()+1);
-			break;
-		case LEFT:
-			next = new GridPoint(crt.getX()-1, crt.getY());
-			break;
-		case RIGHT:
-			next = new GridPoint(crt.getX()+1, crt.getY());
-			break;
-		default:
-			next = new GridPoint(crt.getX(), crt.getY());
-	}
-	
-	//TODO: if next position is not valid return error value
-	if(		next.getX()<0 || next.getX()>=GRID_WIDTH ||	// snake's head out of bounds
-			next.getY()<0 || next.getY()>=GRID_HEIGHT) {
-		setState(GameState.GAME_OVER);
-		return;
-	}
-	
-	if(isSnakeOnPoint(next)) {	// snake eats its own tail
-		setState(GameState.GAME_OVER);
-		return;
-	}
-	
-	snake.addFirst(next);
-	
-	// Insect has been eaten, snake grows longer
-	if(next.equals(insect)) {
-		replaceInsect();
-	}
-	else {
-		snake.removeLast();
-	}
-	
-    setChanged();
-    notifyObservers(WorldEvents.STEP_FORWARD);
-  }
+  } 
 }
