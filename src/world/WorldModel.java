@@ -22,11 +22,9 @@ public class WorldModel extends Observable {
   private int  	score=0;
   private int	cntEaten=0;
   private int 	speed=10;
-  private int 	gridWidth=100;
-  private int	gridHeight=100;
 
-  public static final int GRID_WIDTH=100;
-  public static final int GRID_HEIGHT=100;
+  public static final int GRID_WIDTH=50;
+  public static final int GRID_HEIGHT=50;
   
   public final int SPEED_MIN=1;
   public final int SPEED_MAX=20;
