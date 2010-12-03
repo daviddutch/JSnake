@@ -27,6 +27,9 @@ public class WorldModel extends Observable {
 
   public static final int GRID_WIDTH=100;
   public static final int GRID_HEIGHT=100;
+  
+  public final int SPEED_MIN=1;
+  public final int SPEED_MAX=20;
 
   private GameState   state;
   private Locale locale;
