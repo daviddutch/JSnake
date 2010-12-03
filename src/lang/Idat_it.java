@@ -12,9 +12,12 @@ public class Idat_it extends ListResourceBundle{
                                   {"blue", "Blue_it"},
                                   {"red", "Red_it"},
                                   {"pink", "Pink_it"},
-                                  {"speed", "velocità"},
                                   {"play", "Gioca"},
-                                  {"Pause", "Pausa"}                              
+                                  {"Pause", "Pausa"},
+                                  
+                                  {"score", "Punti"},
+                                  {"cntEaten", "Insetti mangiati"},
+                                  {"speed", "Velocità"}    
   };
   
   protected Object[][] getContents() {
