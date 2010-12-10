@@ -29,7 +29,7 @@ public class GamePanel extends JPanel {
     setBackground(Color.BLACK);
     this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
-    javax.swing.Timer timer = new javax.swing.Timer(200, new SnakeController(this, wm));
+    javax.swing.Timer timer = new javax.swing.Timer(100, new SnakeController(this, wm));
     timer.start();
   }
   private GridPoint convert(GridPoint p){
@@ -51,10 +51,14 @@ public class GamePanel extends JPanel {
     path = new GeneralPath();
     Iterator<GridPoint> itr = gpq.iterator();
     GridPoint point = convert((GridPoint)itr.next());
-    path.moveTo(point.getX(), point.getY());
+    
+    double epsilon = (width/WorldModel.GRID_WIDTH)/2;
+    
+    path.moveTo(point.getX()+epsilon, point.getY()+epsilon);
+    
     while(itr.hasNext()) {
       point = convert((GridPoint)itr.next());
-      path.lineTo(point.getX(), point.getY());
+      path.lineTo(point.getX()+epsilon, point.getY()+epsilon);
     }
   }
   protected void paintComponent(Graphics g) {
@@ -74,8 +78,9 @@ public class GamePanel extends JPanel {
     g2.setStroke(new BasicStroke(width/WorldModel.GRID_WIDTH));
     g2.draw(path);
     
+    double epsilon = 0;//(width/WorldModel.GRID_WIDTH);
     GridPoint insect = convert(wm.getInsect());
-    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), width/WorldModel.GRID_WIDTH, height/WorldModel.GRID_HEIGHT);
+    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY()-epsilon, width/WorldModel.GRID_WIDTH, height/WorldModel.GRID_HEIGHT);
     g2.setPaint(Color.RED);
     g2.fill(ins);
     
