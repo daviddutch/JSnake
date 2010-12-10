@@ -14,7 +14,7 @@ public class Idat_it extends ListResourceBundle{
                                   {"pink", "Pink_it"},
                                   {"play", "Gioca"},
                                   {"Pause", "Pausa"},
-                                  
+                                  {"option", "Option"},
                                   {"score", "Punti"},
                                   {"cntEaten", "Insetti mangiati"},
                                   {"speed", "Velocità"}    
