@@ -35,7 +35,7 @@ public class WorldModel extends Observable {
   private LinkedList<GridPoint> snake=new LinkedList<GridPoint>();
   private Direction nextDirection = Direction.LEFT;
   private GridPoint insect = new GridPoint(0, 0);
-  private Random r = new Random();
+  private boolean acceptDirectionChanges=true;
   
   public WorldModel(){
     setLocale(Locale.getDefault());
@@ -124,10 +124,12 @@ public class WorldModel extends Observable {
     return state;
   }
   /**
-   * sets the next direction to d
+   * sets the next direction to d (if it is a direction allowed) and ignore next calls
+   * to this method until getNextDirectionAndAcceptDirectionChanges has been called
    * @param d next direction
    */
   public void setNextDirection(Direction d) {
+	  if(!acceptDirectionChanges) return;
 	  // check if next direction is opposite to the current one
 	  if ((nextDirection==Direction.DOWN && d==Direction.UP) ||
 			  (nextDirection==Direction.UP && d==Direction.DOWN))
@@ -136,12 +138,14 @@ public class WorldModel extends Observable {
 			  (nextDirection==Direction.RIGHT && d==Direction.LEFT))
 		  return;
 	  // change next direction
+	  acceptDirectionChanges=false;
 	  nextDirection = d;
   }
   /**
-   * Returns the next directions
+   * Returns the next directions and accept new direction changes.
    */
-  public Direction getNextDirection() {
+  public Direction getNextDirectionAndAcceptDirectionChanges() {
+	  acceptDirectionChanges=true;
 	  return nextDirection;
   }
   /**
