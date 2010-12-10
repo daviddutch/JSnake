@@ -107,6 +107,7 @@ public class WorldModel extends Observable {
    */
   public void setState(GameState state) {
 	this.state = state;
+	
     setChanged();
     notifyObservers(WorldEvents.CONFIG_CHANGED);
   }

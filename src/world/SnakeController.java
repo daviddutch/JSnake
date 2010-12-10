@@ -22,8 +22,9 @@ public class SnakeController implements Observer, ActionListener {
 	 */
 	public SnakeController(WorldModel wm) {
 		this.wm = wm;
+		this.wm.addObserver(this);
 		// TODO check whether this timer does its job
-		t = new Timer(wm.getSpeed(), this);
+		t = new Timer(wm.getSpeed()*200, this);
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.

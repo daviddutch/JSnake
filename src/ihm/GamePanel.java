@@ -86,7 +86,7 @@ public class GamePanel extends JPanel {
     
     
     /////////////////
-    {
+   /* {
     GridPoint point = head;
     double epsilon = (width/WorldModel.GRID_WIDTH)/7;
     Rectangle2D eye1 = new Rectangle2D.Double(point.getX()+epsilon, point.getY()+epsilon, epsilon, epsilon);
@@ -102,7 +102,7 @@ public class GamePanel extends JPanel {
     g2.setPaint(Color.BLACK);
     Rectangle2D mouth = new Rectangle2D.Double(point.getX()+epsilon, point.getY()+epsilon*5, epsilon*6, epsilon);
     g2.fill(mouth);
-    }
+    }*/
     //////////////////////////
     
     

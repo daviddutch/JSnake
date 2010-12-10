@@ -51,7 +51,6 @@ public class GameView extends JFrame {
     od = new OptionDialog(wm);
     od.setModal(true);
     
-    wm.setState(GameState.PLAY);
     ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
     setLayout(layout);
     layout.addRow("a+*.......ab.b");
