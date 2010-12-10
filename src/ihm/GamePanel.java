@@ -33,11 +33,9 @@ public class GamePanel extends JPanel {
     setBackground(Color.BLACK);
     img = new ImageIcon("background.jpg").getImage();
     
-    
     this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
-    javax.swing.Timer timer = new javax.swing.Timer(100, new SnakeController(this, wm));
-    timer.start();
+    new SnakeController(wm);
   }
   private GridPoint convert(GridPoint p){
     return new GridPoint(height/WorldModel.GRID_WIDTH*p.getX(), width/WorldModel.GRID_HEIGHT*p.getY());
@@ -80,7 +78,7 @@ public class GamePanel extends JPanel {
     Rectangle2D box = new Rectangle2D.Double(0, 0, width, height);
     g2.setPaint(Color.WHITE);
     g2.fill(box);
-    g.drawImage(img, 0, 0, null);
+    g.drawImage(img, 0, 0, width, height, null);
 
     g2.setPaint(Color.BLUE);
     g2.setStroke(new BasicStroke(width/WorldModel.GRID_WIDTH));
