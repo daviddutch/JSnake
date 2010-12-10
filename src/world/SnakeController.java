@@ -23,7 +23,6 @@ public class SnakeController implements Observer, ActionListener {
 	public SnakeController(WorldModel wm) {
 		this.wm = wm;
 		this.wm.addObserver(this);
-		System.out.println(wm.getStepDelay());
 		t = new Timer(wm.getStepDelay(), this);
 		t.stop();
 	}
@@ -42,7 +41,7 @@ public class SnakeController implements Observer, ActionListener {
 		GridPoint crt = snake.getFirst();
 		GridPoint next;
 		// compute next point
-		switch(wm.getNextDirection()) {
+		switch(wm.getNextDirectionAndAcceptDirectionChanges()) {
 			case UP:
 				next = new GridPoint(crt.getX(), crt.getY()-1);
 				break;
