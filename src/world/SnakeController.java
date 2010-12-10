@@ -23,8 +23,9 @@ public class SnakeController implements Observer, ActionListener {
 	public SnakeController(WorldModel wm) {
 		this.wm = wm;
 		this.wm.addObserver(this);
-		// TODO check whether this timer does its job
-		t = new Timer(wm.getSpeed()*20, this);
+		System.out.println(wm.getStepDelay());
+		t = new Timer(wm.getStepDelay(), this);
+		t.stop();
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.
@@ -72,6 +73,8 @@ public class SnakeController implements Observer, ActionListener {
 		snake.addFirst(next);
 		// Insect has been eaten, snake grows longer
 		if(next.equals(wm.getInsect())) {
+			wm.setCntEaten(wm.getCntEaten()+1);
+			wm.setScore(wm.getScore()+1);
 			replaceInsect(snake);
 		}
 		else {
@@ -104,7 +107,9 @@ public class SnakeController implements Observer, ActionListener {
 		}while(isSnakeOnPoint(ni, snake));
 		wm.setInsect(ni);
 	}
-
+	/**
+	 * Notified when the cofigs change.
+	 */
 	@Override
 	public void update(Observable o, Object event) {
 	    WorldModel.WorldEvents what = (WorldModel.WorldEvents) event;
@@ -114,11 +119,13 @@ public class SnakeController implements Observer, ActionListener {
 	        break;
 	    }
 	}
-	
+	/**
+	 * Starts / stops the simulation.
+	 */
 	private void configChanged() {
-		t.setDelay(wm.getSpeed()*20); //FIXME transform speed to a delay
 		switch(wm.getState()) {
 		case PLAY:
+			t.setDelay(wm.getStepDelay());
 			t.start();
 			break;
 		default:
