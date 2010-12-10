@@ -24,7 +24,7 @@ public class SnakeController implements Observer, ActionListener {
 		this.wm = wm;
 		this.wm.addObserver(this);
 		// TODO check whether this timer does its job
-		t = new Timer(wm.getSpeed()*200, this);
+		t = new Timer(wm.getSpeed()*20, this);
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.
@@ -116,7 +116,7 @@ public class SnakeController implements Observer, ActionListener {
 	}
 	
 	private void configChanged() {
-		t.setDelay(wm.getSpeed()); //FIXME transform speed to a delay
+		t.setDelay(wm.getSpeed()*20); //FIXME transform speed to a delay
 		switch(wm.getState()) {
 		case PLAY:
 			t.start();
