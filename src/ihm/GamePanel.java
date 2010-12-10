@@ -15,9 +15,15 @@ import java.util.*;
 import world.SnakeController;
 import world.WorldModel;
 import world.GridPoint;
+import world.WorldModel.GameState;
 
 public class GamePanel extends JPanel {
   private Image img;
+  private Image snakeBody;
+  private Image snakeHead;
+  private Image imgInsect;
+  
+  private GameState state;
   
   boolean runSnake = true;
   GeneralPath path = new GeneralPath();
@@ -25,17 +31,19 @@ public class GamePanel extends JPanel {
   int height       = 400;
   GridPoint head;
   WorldModel wm;
+  Iterator<GridPoint> snake;
   
   public GamePanel(WorldModel wm) {
-    
-    //setPreferredSize(new Dimension(400, 400));
-    
-    setBackground(Color.BLACK);
-    img = new ImageIcon("background.jpg").getImage();
+      
+    img       = new ImageIcon("images/background.png").getImage();
+    snakeBody = new ImageIcon("images/body.png").getImage();
+    snakeHead = new ImageIcon("images/head.png").getImage();
+    imgInsect = new ImageIcon("images/insect.png").getImage();
     
     this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
     new SnakeController(wm);
+    state = wm.getState();
   }
   private GridPoint convert(GridPoint p){
     return new GridPoint(height/WorldModel.GRID_WIDTH*p.getX(), width/WorldModel.GRID_HEIGHT*p.getY());
@@ -55,6 +63,7 @@ public class GamePanel extends JPanel {
   public void updatePath(Queue<GridPoint> gpq){
     path = new GeneralPath();
     Iterator<GridPoint> itr = gpq.iterator();
+    snake = gpq.iterator();
     GridPoint point = convert((GridPoint)itr.next());
     head = point;
     double epsilon = (width/WorldModel.GRID_WIDTH)/2;
@@ -70,63 +79,47 @@ public class GamePanel extends JPanel {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g;
     
-    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-        RenderingHints.VALUE_ANTIALIAS_ON);
-    //g2.translate(50, getHeight() - 50); // Move the origin to the lower left
-    //g2.scale(1.0, -1.0); // Flip the sign of the coordinate system
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    Rectangle2D box = new Rectangle2D.Double(0, 0, width, height);
-    g2.setPaint(Color.WHITE);
-    g2.fill(box);
+    //Draw background
     g.drawImage(img, 0, 0, width, height, null);
-
-    g2.setPaint(Color.BLUE);
-    g2.setStroke(new BasicStroke(width/WorldModel.GRID_WIDTH));
-    g2.draw(path);
     
-    
-    /////////////////
-   /* {
-    GridPoint point = head;
-    double epsilon = (width/WorldModel.GRID_WIDTH)/7;
-    Rectangle2D eye1 = new Rectangle2D.Double(point.getX()+epsilon, point.getY()+epsilon, epsilon, epsilon);
-    g2.setPaint(Color.BLACK);
-    Rectangle2D eye2 = new Rectangle2D.Double(point.getX()-epsilon*2+(width/WorldModel.GRID_WIDTH), point.getY()+epsilon, epsilon, epsilon);
-    g2.fill(eye1);
-    g2.fill(eye2);
-    
-    g2.setPaint(Color.BLACK);
-    Rectangle2D nose = new Rectangle2D.Double(point.getX()+3*epsilon, point.getY()+epsilon*3, epsilon, epsilon);
-    g2.fill(nose);
-    
-    g2.setPaint(Color.BLACK);
-    Rectangle2D mouth = new Rectangle2D.Double(point.getX()+epsilon, point.getY()+epsilon*5, epsilon*6, epsilon);
-    g2.fill(mouth);
-    }*/
-    //////////////////////////
-    
-    
-    
-    
+  //Draw snake by image
+    if (snake!=null && snake.hasNext()){
+      int snakeSize = width/WorldModel.GRID_WIDTH;
+      GridPoint point = convert((GridPoint)snake.next());
+      
+      g.drawImage(snakeHead, (int)(point.getX()), (int)(point.getY()), snakeSize, snakeSize, null);
+      
+      while(snake.hasNext()) {
+        point = convert((GridPoint)snake.next());
+        g.drawImage(snakeBody, (int)(point.getX()), (int)(point.getY()), snakeSize, snakeSize, null);
+      }
+    }
+    //Draw insect
     GridPoint insect = convert(wm.getInsect());
-    Rectangle2D ins = new Rectangle2D.Double(insect.getX(), insect.getY(), width/WorldModel.GRID_WIDTH, height/WorldModel.GRID_HEIGHT);
-    g2.setPaint(Color.RED);
-    g2.fill(ins);
+    g.drawImage(imgInsect, (int)(insect.getX()), (int)(insect.getY()), width/WorldModel.GRID_WIDTH, width/WorldModel.GRID_WIDTH, null);
     
-    double epsilon = (width/WorldModel.GRID_WIDTH)/7;
-    Rectangle2D eye1 = new Rectangle2D.Double(insect.getX()+epsilon, insect.getY()+epsilon, epsilon, epsilon);
-    g2.setPaint(Color.BLACK);
-    Rectangle2D eye2 = new Rectangle2D.Double(insect.getX()-epsilon*2+(width/WorldModel.GRID_WIDTH), insect.getY()+epsilon, epsilon, epsilon);
-    g2.fill(eye1);
-    g2.fill(eye2);
+    g.setFont(g.getFont().deriveFont(16f));
     
-    g2.setPaint(Color.BLACK);
-    Rectangle2D nose = new Rectangle2D.Double(insect.getX()+3*epsilon, insect.getY()+epsilon*3, epsilon, epsilon);
-    g2.fill(nose);
-    
-    g2.setPaint(Color.BLACK);
-    Rectangle2D mouth = new Rectangle2D.Double(insect.getX()+epsilon, insect.getY()+epsilon*5, epsilon*6, epsilon);
-    g2.fill(mouth);
-    
+    switch (state){
+      case GAME_OVER:
+        g.setColor(Color.RED);
+        String msg = "GAME OVER !!\nYou Loose !";
+        g.drawString(msg, width/2-g2.getFontMetrics().stringWidth(msg), height/2);
+        break;
+      case PAUSE:
+        g.setColor(Color.YELLOW);
+        g.drawString("Game on pause", width/2, height/2);
+        break;
+      case STOP:
+        g.setColor(Color.PINK);
+        g.drawString("Game stopped", width/2, height/2);
+        break;
+    }
+  }
+  public void stateChanged(GameState state) {
+    this.state = state;
+    this.repaint();
   }
 }

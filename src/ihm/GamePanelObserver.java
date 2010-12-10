@@ -18,15 +18,15 @@ public class GamePanelObserver implements Observer {
     WorldModel.WorldEvents what = (WorldModel.WorldEvents) event;
     switch (what){
       case CONFIG_CHANGED:
-        configChanged(wm);
+        stateChanged(wm);
         break;
       case STEP_FORWARD:
         stepForward(wm);
         break;
     }
   }
-  private void configChanged(WorldModel wm){
-    
+  private void stateChanged(WorldModel wm){
+    gp.stateChanged(wm.getState());
   }
   private void stepForward(WorldModel wm){
     gp.updatePath(wm.getSnake());
