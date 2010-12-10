@@ -28,6 +28,7 @@ public class WorldModel extends Observable {
   
   public final int SPEED_MIN=1;
   public final int SPEED_MAX=20;
+  public final int STEPDELAY_MIN=100;
 
   private GameState   state;
   private Locale locale;
@@ -58,6 +59,12 @@ public class WorldModel extends Observable {
    */
   public int getSpeed() {
     return speed;
+  }
+  /**
+   * @return the delay between a steps
+   */
+  public int getStepDelay() {
+    return (int)((double)SPEED_MAX/speed*STEPDELAY_MIN);
   }
   /**
    * @param score the score to set
