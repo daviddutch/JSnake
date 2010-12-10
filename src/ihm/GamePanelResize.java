@@ -26,6 +26,7 @@ public class GamePanelResize implements ComponentListener {
   @Override
   public void componentResized(ComponentEvent e) {
     gp.updateSize();
+    gp.repaint();
   }
 
   @Override
