@@ -18,7 +18,10 @@ public class OptionDialogAction implements ActionListener, ChangeListener{
       if(e.getActionCommand()=="color"){
         //my.changeColor(my.boxLang.getSelectedIndex());
       }else if(e.getActionCommand()=="lang"){
-        my.changeLang(my.boxLang.getSelectedIndex());
+        if(my.boxLang.getSelectedIndex()>=0)
+          my.changeLang(my.boxLang.getSelectedIndex());
+      }else if(e.getActionCommand()=="start"){
+        my.startGame();
       }
       //System.out.println("ActionListener : action sur "+my.boxLang.getSelectedItem()+ "index ("+my.boxLang.getSelectedIndex()+")");    
     }
