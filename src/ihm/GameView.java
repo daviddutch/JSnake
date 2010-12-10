@@ -21,7 +21,6 @@ public class GameView extends JFrame {
   OptionDialog od;
   
   public GameView(World world, WorldModel wm) {
-    addComponentListener(new GamePanelResize(this));
     setTitle("JSnake ! The Game !");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
@@ -55,7 +54,8 @@ public class GameView extends JFrame {
     wm.setState(GameState.PLAY);
     ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
     setLayout(layout);
-    layout.addRow("a~.......ab.b");
+    layout.addRow("a+*.......ab.b");
+    gp.addComponentListener(new GamePanelResize(gp));
     add(gp, "a");
     add(new StatsPanel(wm), "b");
   }

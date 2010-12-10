@@ -30,6 +30,7 @@ public class GamePanelObserver implements Observer {
   }
   private void stepForward(WorldModel wm){
     gp.updatePath(wm.getSnake());
+    gp.repaint();
   }
 
 }

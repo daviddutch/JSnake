@@ -5,10 +5,10 @@ import java.awt.event.ComponentListener;
 
 public class GamePanelResize implements ComponentListener {
 
-  private GameView gv;
+  private GamePanel gp;
   
-  public GamePanelResize(GameView gameView) {
-    gv = gameView;
+  public GamePanelResize(GamePanel gamePanel) {
+    gp = gamePanel;
   }
 
   @Override
@@ -25,7 +25,7 @@ public class GamePanelResize implements ComponentListener {
 
   @Override
   public void componentResized(ComponentEvent e) {
-   
+    gp.updateSize();
   }
 
   @Override
