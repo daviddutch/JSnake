@@ -2,6 +2,7 @@ package world;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
@@ -23,8 +24,8 @@ public class SnakeController implements Observer, ActionListener {
 	public SnakeController(WorldModel wm) {
 		this.wm = wm;
 		this.wm.addObserver(this);
-		// TODO check whether this timer does its job
-		t = new Timer(wm.getSpeed()*20, this);
+		t = new Timer(wm.getStepDelay(), this);
+		t.stop();
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.
@@ -41,7 +42,7 @@ public class SnakeController implements Observer, ActionListener {
 		GridPoint crt = snake.getFirst();
 		GridPoint next;
 		// compute next point
-		switch(wm.getNextDirection()) {
+		switch(wm.getNextDirectionAndAcceptDirectionChanges()) {
 			case UP:
 				next = new GridPoint(crt.getX(), crt.getY()-1);
 				break;
@@ -64,47 +65,51 @@ public class SnakeController implements Observer, ActionListener {
 			return;
 		}
 		// snake eats its own tail
-		if(isSnakeOnPoint(next, snake)) {
+		if(isPointOnSnake(next, snake)) {
 			wm.setState(GameState.GAME_OVER);
 			return;
 		}
 		// Add a from "piece" to the snake
 		snake.addFirst(next);
-		// Insect has been eaten, snake grows longer
-		if(next.equals(wm.getInsect())) {
-			replaceInsect(snake);
+		// check if insect has been eaten
+		boolean eaten = false;
+		for(Insect ins : wm.getInsects()) {
+			if(ins.equals(next)) {
+				wm.setCntEaten(wm.getCntEaten()+1);
+				wm.setScore(wm.getScore()+ins.getScore());
+				wm.replaceInsect(snake, wm.getInsects(), ins);
+				eaten=true;
+				break;
+			}			
 		}
-		else {
+		if(!eaten)	// snake didn't eat, doesn't grow longer
 			snake.removeLast();
-		}
 		// Update model --> notify view
 		wm.setSnake(snake);
 	}
 	/**
-	 * checks if the snake is placed on the given point
-	 * @param p point to check
-	 * @param snake linked list representing the snake
-	 * @return true if snake is on p
+	 * check if the snake is on the given point
+	 * @return true if snake is on the point
 	 */
-	private boolean isSnakeOnPoint(GridPoint p, LinkedList<GridPoint> snake) {
+	private boolean isPointOnSnake(GridPoint p, LinkedList<GridPoint> snake) {
 		for(GridPoint sp : snake) {
-			if(sp.equals(p)) {
-				return true;
-			}
-	  }
-	  return false;
+			if(p.equals(sp)) return true;
+		}
+		return false;
 	}
 	/**
-	 * creates a new insect in a random place.
+	 * chek if the point is on insect
+	 * @return true if point is on insect
 	 */
-	public void replaceInsect(LinkedList<GridPoint> snake){
-		GridPoint ni; // the new insect
-		do {
-			ni=new GridPoint(r.nextInt(wm.GRID_WIDTH), r.nextInt(wm.GRID_WIDTH));
-		}while(isSnakeOnPoint(ni, snake));
-		wm.setInsect(ni);
+	private boolean isPointOnInsect(GridPoint p, ArrayList<Insect> insects) {
+		for(GridPoint ip : insects) {
+			if(p.equals(ip)) return true;
+		}
+		return false;
 	}
-
+	/**
+	 * notified when the configs change.
+	 */
 	@Override
 	public void update(Observable o, Object event) {
 	    WorldModel.WorldEvents what = (WorldModel.WorldEvents) event;
@@ -114,11 +119,13 @@ public class SnakeController implements Observer, ActionListener {
 	        break;
 	    }
 	}
-	
+	/**
+	 * starts / stops the simulation.
+	 */
 	private void configChanged() {
-		t.setDelay(wm.getSpeed()*20); //FIXME transform speed to a delay
 		switch(wm.getState()) {
 		case PLAY:
+			t.setDelay(wm.getStepDelay());
 			t.start();
 			break;
 		default:

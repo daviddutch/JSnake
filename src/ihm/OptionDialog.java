@@ -102,6 +102,8 @@ public class OptionDialog extends JDialog {
     panel.add(lblColor);
     panel.add(boxColor);
     
+    setText();
+    
     setLayout(new BorderLayout());
     add(header,BorderLayout.NORTH);
     add(panel, BorderLayout.CENTER);
@@ -118,7 +120,13 @@ public class OptionDialog extends JDialog {
     
     comboModel.update();
     boxLang.revalidate();
-    
+    if(bIdat.getLocale().toString().compareTo("fr")==0){
+      boxLang.setSelectedIndex(0);
+    }else if(bIdat.getLocale().toString().compareTo("en")==0){
+      boxLang.setSelectedIndex(1);
+    }else if(bIdat.getLocale().toString().compareTo("it")==0){
+      boxLang.setSelectedIndex(2);
+    }    
     boxColor.removeAllItems();
     boxColor.addItem(bIdat.getString("blue"));
     boxColor.addItem(bIdat.getString("red"));
