@@ -1,24 +1,33 @@
 package world;
 
-import ihm.GamePanel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
+
+import javax.swing.Timer;
 
 import world.WorldModel.GameState;
 
-public class SnakeController implements ActionListener {
-	private GamePanel animPanel;
+public class SnakeController implements Observer, ActionListener {
 	private WorldModel wm;
+	private Timer t;
 	private Random r = new Random();
-	
-	public SnakeController(GamePanel animPanel, WorldModel wm) {
-		this.animPanel = animPanel;
-		this.wm        = wm;
+	/**
+	 * Constructor method
+	 * @param animPanel
+	 * @param wm the model
+	 */
+	public SnakeController(WorldModel wm) {
+		this.wm = wm;
+		// TODO check whether this timer does its job
+		t = new Timer(wm.getSpeed(), this);
 	}
-	
+	/**
+	 * Moves the snake forward. Action fired by the timer.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		moveSnakeForward();
@@ -30,7 +39,7 @@ public class SnakeController implements ActionListener {
 		LinkedList<GridPoint> snake = wm.getSnake();
 		GridPoint crt = snake.getFirst();
 		GridPoint next;
-		
+		// compute next point
 		switch(wm.getNextDirection()) {
 			case UP:
 				next = new GridPoint(crt.getX(), crt.getY()-1);
@@ -47,20 +56,19 @@ public class SnakeController implements ActionListener {
 			default:
 				next = new GridPoint(crt.getX(), crt.getY());
 		}
-		
-		if(		next.getX()<0 || next.getX()>=wm.GRID_WIDTH ||	// snake's head out of bounds
-				next.getY()<0 || next.getY()>=wm.GRID_HEIGHT) {
+		// snake's head out of bounds
+		if(	next.getX()<0 || next.getX()>=wm.GRID_WIDTH ||
+			next.getY()<0 || next.getY()>=wm.GRID_HEIGHT) {
 			wm.setState(GameState.GAME_OVER);
 			return;
 		}
-		
-		if(isSnakeOnPoint(next, snake)) {	// snake eats its own tail
+		// snake eats its own tail
+		if(isSnakeOnPoint(next, snake)) {
 			wm.setState(GameState.GAME_OVER);
 			return;
 		}
-		
+		// Add a from "piece" to the snake
 		snake.addFirst(next);
-		
 		// Insect has been eaten, snake grows longer
 		if(next.equals(wm.getInsect())) {
 			replaceInsect(snake);
@@ -68,7 +76,7 @@ public class SnakeController implements ActionListener {
 		else {
 			snake.removeLast();
 		}
-		
+		// Update model --> notify view
 		wm.setSnake(snake);
 	}
 	/**
@@ -94,6 +102,28 @@ public class SnakeController implements ActionListener {
 			ni=new GridPoint(r.nextInt(wm.GRID_WIDTH), r.nextInt(wm.GRID_WIDTH));
 		}while(isSnakeOnPoint(ni, snake));
 		wm.setInsect(ni);
+	}
+
+	@Override
+	public void update(Observable o, Object event) {
+	    WorldModel.WorldEvents what = (WorldModel.WorldEvents) event;
+	    switch (what){
+	      case CONFIG_CHANGED:
+	        configChanged();
+	        break;
+	    }
+	}
+	
+	private void configChanged() {
+		t.setDelay(wm.getSpeed()); //FIXME transform speed to a delay
+		switch(wm.getState()) {
+		case PLAY:
+			t.start();
+			break;
+		default:
+			t.stop();
+			break;
+		}
 	}
 }
 
