@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Observable;
-import java.util.Queue;
 import java.util.Random;
 
 
@@ -31,7 +30,7 @@ public class WorldModel extends Observable {
   public final int SPEED_MAX=20;
   public final int STEPDELAY_MIN=100;
   public final int INSECTS = 4;
-  public static final int [] INSECT_SCORES = {1, 2, 3};
+  public final int [] INSECT_SCORES = {1, 2, 3};
 
   private GameState   state;
   private Locale locale;
@@ -40,17 +39,12 @@ public class WorldModel extends Observable {
   private ArrayList<Insect> insects = new ArrayList<Insect>();
   private boolean acceptDirectionChanges=true;
   private Random r = new Random();
-  
+  /**
+   * constructor method
+   */
   public WorldModel(){
     setLocale(Locale.getDefault());
     state = GameState.STOP;
-    snake.addFirst(new GridPoint(GRID_WIDTH/2, GRID_HEIGHT/2));
-    snake.addFirst(new GridPoint(GRID_WIDTH/2-1, GRID_HEIGHT/2));
-    snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2));
-    snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-1));
-    snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-2));
-    
-    for(int i=0; i<INSECTS; i++) placeRandomInsect(snake, insects);
   }
   /**
    * @param speed the speed to set
@@ -161,6 +155,14 @@ public class WorldModel extends Observable {
 	  return insects;
   }
   /**
+   * @param insects list of insects
+   */
+  public void setInsects(ArrayList<Insect> insects) {
+	  this.insects = insects;
+	  setChanged();
+	  notifyObservers(WorldEvents.STEP_FORWARD);
+  }
+  /**
    * @param snake list representing the snake's points
    */
   public void setSnake(LinkedList<GridPoint> snake) {
@@ -174,38 +176,4 @@ public class WorldModel extends Observable {
   public LinkedList<GridPoint> getSnake(){
 	  return snake;
   }
-  /**
-	 * checks if the given point is free
-	 * @param p point to check
-	 * @param snake linked list representing the snake
-	 * @return true if snake is on p
-	 */
-	public  boolean isGridPointFree(GridPoint p, LinkedList<GridPoint> snake, ArrayList<Insect> insects) {
-		for(GridPoint sp : snake) {	// check if point is on snake
-			if(sp.equals(p)) return true;
-		}
-		for(GridPoint ins : insects) {	// check is point is on insects
-			if(ins.equals(p)) return true;
-		}
-	  return false;
-	}
-	/**
-	 * creates a new insect in a random place.
-	 */
-	public void placeRandomInsect(LinkedList<GridPoint> snake, ArrayList<Insect> insects){
-		Insect ins; // the new insect
-		do {
-			ins=new Insect(	r.nextInt(GRID_WIDTH),
-							r.nextInt(GRID_WIDTH),
-							INSECT_SCORES[r.nextInt(INSECT_SCORES.length)]);
-		}while(isGridPointFree(ins, snake, insects));
-		insects.add(ins);
-	}
-	/**
-	 * replace an insect
-	 */
-	public void replaceInsect(LinkedList<GridPoint> snake, ArrayList<Insect> insects, Insect ins) {
-		insects.remove(ins);
-		placeRandomInsect(snake, insects);
-	}
 }
