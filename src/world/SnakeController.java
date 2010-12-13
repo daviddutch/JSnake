@@ -24,8 +24,21 @@ public class SnakeController implements Observer, ActionListener {
 	public SnakeController(WorldModel wm) {
 		this.wm = wm;
 		this.wm.addObserver(this);
-		t = new Timer(wm.getStepDelay(), this);
-		t.stop();
+		t = new Timer(wm.getStepDelay(), this); t.stop();
+		
+		LinkedList<GridPoint> snake = new LinkedList<GridPoint>();
+		snake.addFirst(new GridPoint(wm.GRID_WIDTH/2, wm.GRID_HEIGHT/2));
+	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-1, wm.GRID_HEIGHT/2));
+	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2));
+	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2-1));
+	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2-2));
+	    
+	    ArrayList<Insect> insects = new ArrayList<Insect>();
+	    for(int i=0; i<wm.INSECTS; i++)
+	    	insects.add(getRandomInsect(snake, insects));
+	    
+	    wm.setInsects(insects);	// Update model and view is notified
+	    wm.setSnake(snake);
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.
@@ -39,6 +52,7 @@ public class SnakeController implements Observer, ActionListener {
 	 */
 	private void moveSnakeForward() {
 		LinkedList<GridPoint> snake = wm.getSnake();
+		ArrayList<Insect> insects = wm.getInsects();
 		GridPoint crt = snake.getFirst();
 		GridPoint next;
 		// compute next point
@@ -73,11 +87,12 @@ public class SnakeController implements Observer, ActionListener {
 		snake.addFirst(next);
 		// check if insect has been eaten
 		boolean eaten = false;
-		for(Insect ins : wm.getInsects()) {
+		for(Insect ins : insects) {
 			if(ins.equals(next)) {
 				wm.setCntEaten(wm.getCntEaten()+1);
 				wm.setScore(wm.getScore()+ins.getScore());
-				wm.replaceInsect(snake, wm.getInsects(), ins);
+				insects.remove(ins);
+				insects.add(getRandomInsect(snake, insects));
 				eaten=true;
 				break;
 			}			
@@ -86,6 +101,18 @@ public class SnakeController implements Observer, ActionListener {
 			snake.removeLast();
 		// Update model --> notify view
 		wm.setSnake(snake);
+	}
+	/**
+	 * creates a new insect in a free random place.
+	 */
+	private Insect getRandomInsect(LinkedList<GridPoint> snake, ArrayList<Insect> insects){
+		Insect ins; // the new insect
+		do {
+			ins=new Insect(	r.nextInt(wm.GRID_WIDTH),
+							r.nextInt(wm.GRID_WIDTH),
+							wm.INSECT_SCORES[r.nextInt(wm.INSECT_SCORES.length)]);
+		}while(isPointOnSnake(ins, snake) || isPointOnInsect(ins, insects));
+		return ins;
 	}
 	/**
 	 * check if the snake is on the given point
