@@ -32,13 +32,13 @@ public class SnakeController implements Observer, ActionListener {
 	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2));
 	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2-1));
 	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2-2));
+	    wm.setSnake(snake);
 	    
 	    ArrayList<Insect> insects = new ArrayList<Insect>();
 	    for(int i=0; i<wm.INSECTS; i++)
 	    	insects.add(getRandomInsect(snake, insects));
 	    
-	    wm.setInsects(insects);	// Update model and view is notified
-	    wm.setSnake(snake);
+	    wm.setInsects(insects);	// Update model and view is notified	    
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.
