@@ -2,8 +2,6 @@ package ihm;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -12,6 +10,7 @@ import java.util.*;
 
 
 
+import world.Insect;
 import world.SnakeController;
 import world.WorldModel;
 import world.GridPoint;
@@ -96,11 +95,14 @@ public class GamePanel extends JPanel {
         g.drawImage(snakeBody, (int)(point.getX()), (int)(point.getY()), snakeSize, snakeSize, null);
       }
     }
-    //Draw insect
-    GridPoint insect = convert(wm.getInsect());
-    g.drawImage(imgInsect, (int)(insect.getX()), (int)(insect.getY()), width/WorldModel.GRID_WIDTH, width/WorldModel.GRID_WIDTH, null);
+    //Draw insects
+    for(Insect ins : wm.getInsects()) {
+      GridPoint insect = convert(ins);
+      g.drawImage(imgInsect, (int)(insect.getX()), (int)(insect.getY()), width/WorldModel.GRID_WIDTH, width/WorldModel.GRID_WIDTH, null);
+    }
     
     g.setFont(g.getFont().deriveFont(16f));
+    
     
     switch (state){
       case GAME_OVER:
