@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class WorldModel extends Observable {
   public enum WorldEvents {
-    CONFIG_CHANGED, STEP_FORWARD;
+    CONFIG_CHANGED, STEP_FORWARD, INSECT_CHANGED;
   }
   public enum GameState {
     STOP, PLAY, PAUSE, GAME_OVER;
@@ -160,7 +160,7 @@ public class WorldModel extends Observable {
   public void setInsects(ArrayList<Insect> insects) {
 	  this.insects = insects;
 	  setChanged();
-	  notifyObservers(WorldEvents.STEP_FORWARD);
+	  notifyObservers(WorldEvents.INSECT_CHANGED);
   }
   /**
    * @param snake list representing the snake's points
