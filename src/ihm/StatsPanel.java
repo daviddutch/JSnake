@@ -1,11 +1,13 @@
 package ihm;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import world.WorldModel;
 
@@ -28,26 +30,32 @@ public class StatsPanel extends JPanel {
 	 * Initialize StatsPanel and its contents
 	 */
 	public StatsPanel(WorldModel wm){
-		this.wm = wm;
+	    this.wm = wm;
+	    
+
+	    lbScoreText.setPreferredSize(new Dimension(90, 20));
+	    lbCntEatenText.setPreferredSize(new Dimension(90, 20));
+	    lbSpeedText.setPreferredSize(new Dimension(90, 20));
+	    //lbScoreText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
+	    ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
 	    setLayout(layout);
 	    layout.addRow("a.......ab.b");
-		layout.addRow("c.......cd.d");
-		layout.addRow("e.......ef.f");
-		
-		add(lbScoreText, "a");
-		add(lbScore, "b");
-		add(lbCntEatenText, "c");
-		add(lbCntEaten, "d");
-		add(lbSpeedText, "e");
-		add(lbSpeed, "f");
-		setText();
+	    layout.addRow("c.......cd.d");
+	    layout.addRow("e.......ef.f");
+	    add(lbScoreText, "a");
+	    add(lbScore, "b");
+	    add(lbCntEatenText, "c");
+	    add(lbCntEaten, "d");
+	    add(lbSpeedText, "e");
+	    add(lbSpeed, "f");
+	    setText();
 		
 	    StatsPanelObserver wo = new StatsPanelObserver(this, wm);
 	    wm.addObserver(wo);
 	    
-	    setSize(230, 200);
+	    setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	    setSize(200, 80);
 	    setPreferredSize(getSize());
 	    setBackground(Color.GRAY);
 	}
