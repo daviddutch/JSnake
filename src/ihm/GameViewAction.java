@@ -18,6 +18,8 @@ public class GameViewAction implements ActionListener{
       my.setPlay();
     }else if(e.getActionCommand()=="stop"){
       my.setStop();
+    }else if(e.getActionCommand()=="option"){
+      my.viewOption();
     }
   }
 

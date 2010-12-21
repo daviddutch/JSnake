@@ -2,6 +2,7 @@ package ihm;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -16,8 +17,11 @@ import world.WorldModel.GameState;
 public class GameView extends JFrame {
   WorldModel wm;
   OptionDialog od;
-  JButton btPlay        = new JButton("Pause");
+  ResourceBundle bIdat;
+  
+  JButton btPlay        = new JButton();
   JButton btStop        = new JButton();
+  JButton btOption      = new JButton();
   
   public GameView(WorldModel word) {
     this.wm = word;
@@ -37,9 +41,12 @@ public class GameView extends JFrame {
     btPlay.addActionListener(new GameViewAction(this));
     btPlay.setActionCommand("pause");
     
-    btStop.setText("Restart");
+    
     btStop.addActionListener(new GameViewAction(this));
     btStop.setActionCommand("stop");
+    
+    btOption.addActionListener(new GameViewAction(this));
+    btOption.setActionCommand("option");
     
     KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
     gp.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), key);
@@ -54,6 +61,7 @@ public class GameView extends JFrame {
     gp.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), key);
     gp.getActionMap().put(gp.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)), new ArrowsAction(wm, Direction.RIGHT));
 
+    setText();
     
     od = new OptionDialog(wm);
     od.setModal(true);
@@ -61,14 +69,28 @@ public class GameView extends JFrame {
     ZoneLayout layout = ZoneLayoutFactory.newZoneLayout();
     setLayout(layout);
     layout.addRow("a+*.......a");
-    layout.addRow("...p.r..b.b");
+    layout.addRow(".o.p.r..b.b");
     gp.addComponentListener(new GamePanelResize(gp));
     add(gp, "a");
     add(new StatsPanel(wm), "b");
     add(btPlay,"p");
     add(btStop,"r");
+    add(btOption,"o");
     
   }
+  
+  public void setText(){
+    bIdat = ResourceBundle.getBundle("lang.Idat", wm.getLocale());
+    
+    btStop.setText(bIdat.getString("restart"));
+    btOption.setText(bIdat.getString("option"));
+    if(wm.getState().compareTo(GameState.PAUSE)==0)
+      btPlay.setText(bIdat.getString("play"));
+    else
+      btPlay.setText(bIdat.getString("pause"));
+  }
+  
+  
   public void setVisible(boolean state){
     super.setVisible(state);
     od.setVisible(true);
@@ -88,4 +110,10 @@ public class GameView extends JFrame {
     //wm.stop();
     od.setVisible(true);
   }
+  public void viewOption() {
+    setPause();
+    od.setVisible(true);
+  }
+  
+  
 }

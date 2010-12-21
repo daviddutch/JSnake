@@ -7,7 +7,11 @@ import world.WorldModel;
 
 public class GameViewObserver implements Observer {
 
-  @Override
+  GameView my;
+  
+  public GameViewObserver(GameView o){
+    my = o;
+  }
   public void update(Observable o, Object event) {
     WorldModel wm = (WorldModel) o;
     WorldModel.WorldEvents what = (WorldModel.WorldEvents) event;
@@ -21,7 +25,7 @@ public class GameViewObserver implements Observer {
     }
   }
   private void configChanged(WorldModel wm){
-    
+    my.setText();
   }
   private void stepForward(WorldModel wm){
     

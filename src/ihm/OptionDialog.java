@@ -21,12 +21,10 @@ public class OptionDialog extends JDialog {
   JLabel lblOption    = new JLabel();
   JLabel lblLang      = new JLabel();
   JLabel lblSpeed     = new JLabel();
-  JLabel lblColor     = new JLabel();
   
   JButton btGame      = new JButton("Start game");
   
   JComboBox boxLang = new JComboBox();
-  JComboBox boxColor = new JComboBox();
   
   LanguagesComboModel comboModel;
   
@@ -63,19 +61,12 @@ public class OptionDialog extends JDialog {
     lblLang.setHorizontalAlignment(JLabel.RIGHT);
     lblSpeed.setPreferredSize(new Dimension(this.getSize().width/3,30));
     lblSpeed.setHorizontalAlignment(JLabel.RIGHT);
-    lblColor.setPreferredSize(new Dimension(this.getSize().width/3,30));
-    lblColor.setHorizontalAlignment(JLabel.RIGHT);
    
     boxLang.setModel(comboModel);
     boxLang.setPreferredSize(new Dimension(150,20));
     boxLang.setMaximumSize(boxLang.getPreferredSize());
     boxLang.addActionListener(action);
     boxLang.setActionCommand("lang");
-       
-    boxColor.setPreferredSize(new Dimension(150,20));
-    boxColor.setMaximumSize(boxColor.getPreferredSize());
-    boxColor.addActionListener(action);
-    boxColor.setActionCommand("color");
 
     sliderSpeed = new JSlider();
     sliderSpeed.setPreferredSize(new Dimension(150, 60));
@@ -99,9 +90,7 @@ public class OptionDialog extends JDialog {
     panel.add(boxLang);
     panel.add(lblSpeed);
     panel.add(sliderSpeed);
-    panel.add(lblColor);
-    panel.add(boxColor);
-    
+
     setText();
     
     setLayout(new BorderLayout());
@@ -116,7 +105,6 @@ public class OptionDialog extends JDialog {
     lblOption.setText(bIdat.getString("option")+" : ");
     lblLang.setText(bIdat.getString("language")+" : ");
     lblSpeed.setText(bIdat.getString("speed")+" : ");
-    lblColor.setText(bIdat.getString("color")+" : ");
     
     comboModel.update();
     boxLang.revalidate();
@@ -127,11 +115,6 @@ public class OptionDialog extends JDialog {
     }else if(bIdat.getLocale().toString().compareTo("it")==0){
       boxLang.setSelectedIndex(2);
     }    
-    boxColor.removeAllItems();
-    boxColor.addItem(bIdat.getString("blue"));
-    boxColor.addItem(bIdat.getString("red"));
-    boxColor.addItem(bIdat.getString("pink"));    
-    boxColor.revalidate();
   }
 
   public void changeLang(int i) {

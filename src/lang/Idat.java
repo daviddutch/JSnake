@@ -5,9 +5,19 @@ import java.util.ListResourceBundle;
 public class Idat extends ListResourceBundle{
 
   private Object[][] contents = { {"language", "Language"},
-                                  {"speed", "Speed"},
+                                  {"french", "French"},
+                                  {"english", "English"},
+                                  {"italian", "Italian"},
                                   {"play", "Play"},
-                                  {"Pause", "Pause"}                              
+                                  {"pause", "Pause"},
+                                  {"gameover", "GAME OVER !!\nYou Loose !"},
+                                  {"gamepause", "Game on pause"},
+                                  {"gamestop", "Game on stop"},
+                                  {"option", "Option"},
+                                  {"restart", "Restart"},
+                                  {"score", "Score"},
+                                  {"cntEaten", "Eaten insects"},
+                                  {"speed", "Speed"},                             
   };
   
   protected Object[][] getContents() {

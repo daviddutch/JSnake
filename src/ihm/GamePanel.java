@@ -6,6 +6,8 @@ import java.awt.geom.GeneralPath;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import sun.jkernel.Bundle;
+
 import java.util.*;
 
 
@@ -103,20 +105,21 @@ public class GamePanel extends JPanel {
     
     g.setFont(g.getFont().deriveFont(16f));
     
+    ResourceBundle bIdat = ResourceBundle.getBundle("lang.Idat", wm.getLocale());
     
     switch (state){
       case GAME_OVER:
         g.setColor(Color.RED);
-        String msg = "GAME OVER !!\nYou Loose !";
+        String msg = bIdat.getString("gameover");
         g.drawString(msg, width/2-g2.getFontMetrics().stringWidth(msg), height/2);
         break;
       case PAUSE:
         g.setColor(Color.YELLOW);
-        g.drawString("Game on pause", width/2, height/2);
+        g.drawString(bIdat.getString("gamepause"), width/2, height/2);
         break;
       case STOP:
         g.setColor(Color.PINK);
-        g.drawString("Game stopped", width/2, height/2);
+        g.drawString(bIdat.getString("gamestop"), width/2, height/2);
         break;
     }
   }
