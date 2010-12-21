@@ -8,7 +8,6 @@ import javax.swing.*;
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
-import world.World;
 import world.WorldModel;
 import world.WorldModel.Direction;
 import world.WorldModel.GameState;
@@ -20,7 +19,7 @@ public class GameView extends JFrame {
   JButton btPlay        = new JButton("Pause");
   JButton btStop        = new JButton();
   
-  public GameView(World world, WorldModel word) {
+  public GameView(WorldModel word) {
     this.wm = word;
     setTitle("Snake Game");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

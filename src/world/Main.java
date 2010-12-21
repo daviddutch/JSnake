@@ -15,8 +15,7 @@ public class Main {
     }
     
     WorldModel wm    = new WorldModel();
-    World      world = new World(wm);
-    GameView gv = new GameView(world, wm);
+    GameView gv = new GameView(wm);
     
     gv.setVisible(true);
   }
