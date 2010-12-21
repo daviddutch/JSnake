@@ -138,6 +138,7 @@ public class OptionDialog extends JDialog {
   }
 
   public void startGame() {
+	wm.init();
     wm.setState(GameState.PLAY);
     setVisible(false);    
   }
