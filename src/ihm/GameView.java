@@ -48,7 +48,7 @@ public class GameView extends JFrame {
     btOption.addActionListener(new GameViewAction(this));
     btOption.setActionCommand("option");
     
-    KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
+    KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);    
     gp.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), key);
     gp.getActionMap().put(gp.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0)), new ArrowsAction(wm, Direction.UP));
     key = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
@@ -60,7 +60,9 @@ public class GameView extends JFrame {
     key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
     gp.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), key);
     gp.getActionMap().put(gp.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)), new ArrowsAction(wm, Direction.RIGHT));
-
+    
+    //this.addKeyListener(new KeyAction(wm));
+    
     setText();
     
     od = new OptionDialog(wm);
