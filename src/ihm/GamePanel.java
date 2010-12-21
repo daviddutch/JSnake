@@ -43,6 +43,7 @@ public class GamePanel extends JPanel {
     
     this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
+    wm.init();
     new SnakeController(wm);
     state = wm.getState();
   }
