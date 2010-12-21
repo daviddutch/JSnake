@@ -25,20 +25,6 @@ public class SnakeController implements Observer, ActionListener {
 		this.wm = wm;
 		this.wm.addObserver(this);
 		t = new Timer(wm.getStepDelay(), this); t.stop();
-		
-		LinkedList<GridPoint> snake = new LinkedList<GridPoint>();
-		snake.addFirst(new GridPoint(wm.GRID_WIDTH/2, wm.GRID_HEIGHT/2));
-	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-1, wm.GRID_HEIGHT/2));
-	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2));
-	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2-1));
-	    snake.addFirst(new GridPoint(wm.GRID_WIDTH/2-2, wm.GRID_HEIGHT/2-2));
-	    wm.setSnake(snake);
-	    
-	    ArrayList<Insect> insects = new ArrayList<Insect>();
-	    for(int i=0; i<wm.INSECTS; i++)
-	    	insects.add(getRandomInsect(snake, insects));
-	    
-	    wm.setInsects(insects);	// Update model and view is notified	    
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.
@@ -152,6 +138,12 @@ public class SnakeController implements Observer, ActionListener {
 	private void configChanged() {
 		switch(wm.getState()) {
 		case PLAY:
+			// Place insects
+			ArrayList<Insect> insects = new ArrayList<Insect>();
+			  for(int i=0; i<wm.INSECTS; i++)
+		    	insects.add(getRandomInsect(wm.getSnake(), insects));
+			wm.setInsects(insects);	// Update model and view is notified
+			
 			t.setDelay(wm.getStepDelay());
 			t.start();
 			break;
