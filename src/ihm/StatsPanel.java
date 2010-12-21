@@ -54,10 +54,9 @@ public class StatsPanel extends JPanel {
 	    StatsPanelObserver wo = new StatsPanelObserver(this, wm);
 	    wm.addObserver(wo);
 	    
-	    setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	    setSize(200, 80);
 	    setPreferredSize(getSize());
-	    setBackground(Color.GRAY);
+	    setBackground(Color.WHITE);
 	}
 	/**
 	 *	Set text of labels according to the location
