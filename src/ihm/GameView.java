@@ -24,6 +24,7 @@ public class GameView extends JFrame {
   JButton btOption      = new JButton();
   
   public GameView(WorldModel word) {
+	  
     this.wm = word;
     setTitle("Snake Game");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,8 +60,8 @@ public class GameView extends JFrame {
     gp.getActionMap().put(gp.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0)), new ArrowsAction(wm, Direction.LEFT));
     key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
     gp.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), key);
-    gp.getActionMap().put(gp.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)), new ArrowsAction(wm, Direction.RIGHT));
-
+    gp.getActionMap().put(gp.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)), new ArrowsAction(wm, Direction.RIGHT));    
+    
     setText();
     
     od = new OptionDialog(wm);
