@@ -54,6 +54,8 @@ public class WorldModel extends Observable {
 	  snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-1));
 	  snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-2));
 	  setSnake(snake);
+	  setScore(0);
+	  setCntEaten(0);
   }
   /**
    * @param speed the speed to set
