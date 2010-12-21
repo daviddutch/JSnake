@@ -46,6 +46,15 @@ public class WorldModel extends Observable {
     setLocale(Locale.getDefault());
     state = GameState.STOP;
   }
+  public void init() {
+	  LinkedList<GridPoint> snake = new LinkedList<GridPoint>();
+	  snake.addFirst(new GridPoint(GRID_WIDTH/2, GRID_HEIGHT/2));
+	  snake.addFirst(new GridPoint(GRID_WIDTH/2-1, GRID_HEIGHT/2));
+	  snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2));
+	  snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-1));
+	  snake.addFirst(new GridPoint(GRID_WIDTH/2-2, GRID_HEIGHT/2-2));
+	  setSnake(snake);
+  }
   /**
    * @param speed the speed to set
    */
