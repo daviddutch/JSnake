@@ -25,11 +25,6 @@ public class SnakeController implements Observer, ActionListener {
 		this.wm = wm;
 		this.wm.addObserver(this);
 		t = new Timer(wm.getStepDelay(), this); t.stop();
-		// Place insects
-		ArrayList<Insect> insects = new ArrayList<Insect>();
-		  for(int i=0; i<wm.INSECTS; i++)
-	    	insects.add(getRandomInsect(wm.getSnake(), insects));
-		wm.setInsects(insects);	// Update model and view is notified
 	}
 	/**
 	 * Moves the snake forward. Action fired by the timer.
@@ -143,6 +138,11 @@ public class SnakeController implements Observer, ActionListener {
 	private void configChanged() {
 		switch(wm.getState()) {
 		case PLAY:			
+			// Place insects
+			ArrayList<Insect> insects = new ArrayList<Insect>();
+			  for(int i=0; i<wm.INSECTS; i++)
+		    	insects.add(getRandomInsect(wm.getSnake(), insects));
+			wm.setInsects(insects);	// Update model and view is notified
 			t.setDelay(wm.getStepDelay());
 			t.start();
 			break;
