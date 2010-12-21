@@ -14,6 +14,7 @@ public class GameViewAction implements ActionListener{
   public void actionPerformed(ActionEvent e) {
     if(e.getActionCommand()=="pause"){
       my.setPause();
+      my.btPlay.transferFocus();
     }else if(e.getActionCommand()=="play"){
       my.setPlay();
     }else if(e.getActionCommand()=="stop"){
