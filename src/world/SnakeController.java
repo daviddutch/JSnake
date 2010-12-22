@@ -59,8 +59,8 @@ public class SnakeController implements Observer, ActionListener {
 				next = new GridPoint(crt.getX(), crt.getY());
 		}
 		// snake's head out of bounds
-		if(	next.getX()<0 || next.getX()>=wm.GRID_WIDTH ||
-			next.getY()<0 || next.getY()>=wm.GRID_HEIGHT) {
+		if(	next.getX()<0 || next.getX()>=WorldModel.GRID_WIDTH ||
+			next.getY()<0 || next.getY()>=WorldModel.GRID_HEIGHT) {
 			wm.setState(GameState.GAME_OVER);
 			return;
 		}
@@ -94,8 +94,8 @@ public class SnakeController implements Observer, ActionListener {
 	private Insect getRandomInsect(LinkedList<GridPoint> snake, ArrayList<Insect> insects){
 		Insect ins; // the new insect
 		do {
-			ins=new Insect(	r.nextInt(wm.GRID_WIDTH),
-							r.nextInt(wm.GRID_WIDTH),
+			ins=new Insect(	r.nextInt(WorldModel.GRID_WIDTH),
+							r.nextInt(WorldModel.GRID_HEIGHT),
 							wm.INSECT_SCORES[r.nextInt(wm.INSECT_SCORES.length)]);
 		}while(isPointOnSnake(ins, snake) || isPointOnInsect(ins, insects));
 		return ins;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Observable;
-import java.util.Random;
 
 
 
@@ -38,7 +37,6 @@ public class WorldModel extends Observable {
   private Direction nextDirection = Direction.LEFT;
   private ArrayList<Insect> insects = new ArrayList<Insect>();
   private boolean acceptDirectionChanges=true;
-  private Random r = new Random();
   /**
    * constructor method
    */
