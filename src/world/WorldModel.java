@@ -21,14 +21,14 @@ public class WorldModel extends Observable {
 
   private int  	score=0;
   private int	cntEaten=0;
-  private int 	speed=10;
+  private int 	speed=30;
 
   public static final int GRID_WIDTH=50;
   public static final int GRID_HEIGHT=50;
   
-  public final int SPEED_MIN=1;
-  public final int SPEED_MAX=20;
-  public final int STEPDELAY_MIN=100;
+  public final int SPEED_MIN=10;
+  public final int SPEED_MAX=50;
+  public final int STEPDELAY_MIN=50;
   public final int INSECTS = 4;
   public final int [] INSECT_SCORES = {1, 2, 3};
 
