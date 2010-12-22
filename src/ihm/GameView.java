@@ -2,6 +2,7 @@ package ihm;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -26,6 +27,7 @@ public class GameView extends JFrame {
   public GameView(WorldModel word) {
 	  
     this.wm = word;
+    this.wm.addObserver((Observer) new GameViewObserver(this));
     setTitle("Snake Game");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
@@ -39,9 +41,7 @@ public class GameView extends JFrame {
     
     GamePanel gp = new GamePanel(wm);
     
-    btPlay.addActionListener(new GameViewAction(this));
-    btPlay.setActionCommand("pause");
-    
+    btPlay.addActionListener(new GameViewAction(this));   
     
     btStop.addActionListener(new GameViewAction(this));
     btStop.setActionCommand("stop");
@@ -82,13 +82,15 @@ public class GameView extends JFrame {
   
   public void setText(){
     bIdat = ResourceBundle.getBundle("lang.Idat", wm.getLocale());
-    
     btStop.setText(bIdat.getString("restart"));
     btOption.setText(bIdat.getString("option"));
-    if(wm.getState().compareTo(GameState.PAUSE)==0)
+    if(wm.getState().compareTo(GameState.PAUSE)==0){
       btPlay.setText(bIdat.getString("play"));
-    else
+      btPlay.setActionCommand("play");
+    }else{
       btPlay.setText(bIdat.getString("pause"));
+      btPlay.setActionCommand("pause");
+    }
   }
   
   

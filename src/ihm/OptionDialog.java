@@ -75,8 +75,8 @@ public class OptionDialog extends JDialog {
     sliderSpeed.setMinimum(wm.SPEED_MIN);
     sliderSpeed.setMaximum(wm.SPEED_MAX);
     sliderSpeed.setValue(wm.getSpeed());
-    sliderSpeed.setMajorTickSpacing(2);
-    sliderSpeed.setMinorTickSpacing(1);
+    sliderSpeed.setMajorTickSpacing(10);
+    sliderSpeed.setMinorTickSpacing(2);
     sliderSpeed.setPaintTicks(true);
     sliderSpeed.setPaintLabels(true);
     sliderSpeed.setSnapToTicks(true);
