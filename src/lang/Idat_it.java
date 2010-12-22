@@ -10,7 +10,7 @@ public class Idat_it extends ListResourceBundle{
                                   {"italian", "italiano"},
                                   {"play", "Gioca"},
                                   {"Pause", "Pausa"},
-                                  {"option", "Option"},
+                                  {"option", "Opzioni"},
                                   {"gameover", "GAME OVER !!\nHai perso!"},
                                   {"gamepause", "Gioco in pausa"},
                                   {"gamestop", "Gioco fermato"},
