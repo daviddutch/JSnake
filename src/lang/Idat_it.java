@@ -11,12 +11,15 @@ public class Idat_it extends ListResourceBundle{
                                   {"play", "Gioca"},
                                   {"Pause", "Pausa"},
                                   {"option", "Opzioni"},
+                                  {"restart", "ricomincia"},
+                                  {"play", "gioca"},
+                                  {"pause", "pausa"},
                                   {"gameover", "GAME OVER !!\nHai perso!"},
                                   {"gamepause", "Gioco in pausa"},
                                   {"gamestop", "Gioco fermato"},
                                   {"score", "Punti"},
                                   {"cntEaten", "Insetti mangiati"},
-                                  {"speed", "Velocità"}    
+                                  {"speed", "Velocità"}
   };
   
   protected Object[][] getContents() {
