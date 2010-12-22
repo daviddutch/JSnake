@@ -1,13 +1,10 @@
 package ihm;
 
 import java.awt.*;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import world.WorldModel;
 
