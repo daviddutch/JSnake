@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -47,7 +48,8 @@ public class OptionDialog extends JDialog {
     
     panel.setBackground(new Color(170, 189, 160));
     
-    header = new JLabel( new ImageIcon("images/snake.png"));
+    URL       url   = getClass().getResource("/Resources/snake.png");
+    header = new JLabel(new ImageIcon(url));
     header.setText("Snake 1.0");
     header.setFont(new Font("Serif", Font.BOLD, 28));
     header.setForeground(new Color(18,189,51));
