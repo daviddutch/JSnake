@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import sun.jkernel.Bundle;
 
+import java.net.URL;
 import java.util.*;
 
 
@@ -35,11 +36,17 @@ public class GamePanel extends JPanel {
   Iterator<GridPoint> snake;
   
   public GamePanel(WorldModel wm) {
-      
-    img       = new ImageIcon("images/background.png").getImage();
-    snakeBody = new ImageIcon("images/body.png").getImage();
-    snakeHead = new ImageIcon("images/head.png").getImage();
-    imgInsect = new ImageIcon("images/insect.png").getImage();
+	URL       url = getClass().getResource("/images/background.png");
+    img       = Toolkit.getDefaultToolkit().getImage(url);
+    
+    url = getClass().getResource("/images/body.png");
+    snakeBody = Toolkit.getDefaultToolkit().getImage(url);
+    
+    url = getClass().getResource("/images/head.png");
+    snakeHead = Toolkit.getDefaultToolkit().getImage(url);
+    
+    url = getClass().getResource("/images/insect.png");
+    imgInsect = Toolkit.getDefaultToolkit().getImage(url);
     
     this.wm = wm;
     wm.addObserver(new GamePanelObserver(this));
