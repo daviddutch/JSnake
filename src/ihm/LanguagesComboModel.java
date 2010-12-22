@@ -9,7 +9,11 @@ import javax.swing.DefaultComboBoxModel;
 import world.WorldModel;
 
 public class LanguagesComboModel extends DefaultComboBoxModel {
-  private List<String> languages = new ArrayList<String>(3);
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private List<String> languages = new ArrayList<String>(3);
   private WorldModel model;
 
   public LanguagesComboModel(WorldModel model) {

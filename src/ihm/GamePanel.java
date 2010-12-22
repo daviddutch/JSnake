@@ -3,10 +3,7 @@ package ihm;
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
-import sun.jkernel.Bundle;
 
 import java.net.URL;
 import java.util.*;
@@ -20,7 +17,11 @@ import world.GridPoint;
 import world.WorldModel.GameState;
 
 public class GamePanel extends JPanel {
-  private Image img;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2424971899225020362L;
+private Image img;
   private Image snakeBody;
   private Image snakeHead;
   private Image imgInsect;

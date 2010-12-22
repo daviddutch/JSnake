@@ -13,7 +13,11 @@ import world.WorldModel.GameState;
 
 public class OptionDialog extends JDialog {
   
-  WorldModel wm;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+WorldModel wm;
   ResourceBundle bIdat;
 
   JPanel panel        = new JPanel(new FlowLayout(FlowLayout.LEFT, 20,10));
@@ -48,7 +52,7 @@ public class OptionDialog extends JDialog {
     
     panel.setBackground(new Color(170, 189, 160));
     
-    URL       url   = getClass().getResource("/Resources/snake.png");
+    URL       url   = getClass().getResource("/images/snake.png");
     header = new JLabel(new ImageIcon(url));
     header.setText("Snake 1.0");
     header.setFont(new Font("Serif", Font.BOLD, 28));

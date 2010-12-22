@@ -16,7 +16,11 @@ import world.WorldModel.GameState;
 
 
 public class GameView extends JFrame {
-  WorldModel wm;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+WorldModel wm;
   OptionDialog od;
   ResourceBundle bIdat;
   

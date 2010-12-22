@@ -8,7 +8,11 @@ import world.WorldModel;
 import world.WorldModel.Direction;
 
 public class ArrowsAction extends AbstractAction{
-  WorldModel wm;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5605740829232068067L;
+WorldModel wm;
   Direction d;
   
   public ArrowsAction(WorldModel wm, Direction d){
